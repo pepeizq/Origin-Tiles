@@ -1,0 +1,8 @@
+﻿<Application
+    x:Class="Origin_Tiles.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Origin_Tiles"
+    RequestedTheme="Light">
+
+</Application>
