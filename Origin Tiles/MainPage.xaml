@@ -78,7 +78,10 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <ListView x:Name="lvJuegos" Grid.Column="0" IsItemClickEnabled="True" Padding="0,0,15,0"/>
+                            <ScrollViewer Grid.Column="0">
+                                <ListView x:Name="lvJuegos" IsItemClickEnabled="True" Padding="0,0,20,0"/>
+                            </ScrollViewer>
+                           
                             <GridView x:Name="gvTiles" Grid.Column="1" IsItemClickEnabled="True" Padding="15,0,0,0"/>
                             <ProgressRing x:Name="prTiles" Grid.Column="1" Visibility="Collapsed" IsActive="True" Height="48" Width="48"/>
                         </Grid>

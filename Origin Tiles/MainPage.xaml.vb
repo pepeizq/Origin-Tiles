@@ -213,9 +213,10 @@ Public NotInheritable Class MainPage
         wb.Tag = bloqueTitulo.Tag
         AddHandler wb.NavigationCompleted, AddressOf wb_NavigationCompleted
 
-        wb.Navigate(New Uri("http://www.steamgriddb.com/game/" + textoTitulo + "/"))
+        wb.Navigate(New Uri("https://www.google.com/search?q=" + textoTitulo + "+steam+grid&biw=1280&bih=886&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjw8KHftrrRAhUN8GMKHdzFBQMQ_AUICCgB&gws_rd=cr,ssl&ei=H1J2WLa_FIPcjwSRvLSQCg"))
 
     End Sub
+
 
     Private Async Sub wb_NavigationCompleted(sender As WebView, e As WebViewNavigationCompletedEventArgs)
 
@@ -236,63 +237,67 @@ Public NotInheritable Class MainPage
 
         If Not html = Nothing Then
             Dim i As Integer = 0
-            While i < 100
-                If html.Contains("<div class=" + ChrW(34) + "grid-row-inner" + ChrW(34)) Then
-                    Dim temp, temp2, temp3 As String
-                    Dim int, int2, int3 As Integer
+            While i < 12
+                If html.Contains("<div class=" + ChrW(34) + "rg_meta" + ChrW(34) + ">") Then
+                    Dim temp, temp2, temp3, temp4 As String
+                    Dim int, int2, int3, int4 As Integer
 
-                    int = html.IndexOf("<div class=" + ChrW(34) + "grid-row-inner" + ChrW(34))
+                    int = html.IndexOf("<div class=" + ChrW(34) + "rg_meta" + ChrW(34) + ">")
                     temp = html.Remove(0, int + 5)
 
                     html = temp
 
-                    int2 = temp.IndexOf("<a href=")
-                    temp2 = temp.Remove(0, int2 + 9)
+                    int2 = temp.IndexOf("</div>")
+                    temp2 = temp.Remove(int2, temp.Length - int2)
 
-                    int3 = temp2.IndexOf(ChrW(34))
-                    temp3 = temp2.Remove(int3, temp2.Length - int3)
+                    If temp2.Contains(ChrW(34) + "ou" + ChrW(34)) Then
+                        int3 = temp2.IndexOf(ChrW(34) + "ou" + ChrW(34))
+                        temp3 = temp2.Remove(0, int3 + 6)
 
-                    '---------------------------------------------------
+                        int4 = temp3.IndexOf(ChrW(34))
+                        temp4 = temp3.Remove(int4, temp3.Length - int4)
 
-                    Dim imagenUri As Uri = New Uri(temp3.Trim, UriKind.RelativeOrAbsolute)
-                    Dim client As New HttpClient
-                    Dim response As Streams.IBuffer = Await client.GetBufferAsync(imagenUri)
-                    Dim stream As Stream = response.AsStream
-                    Dim mem As MemoryStream = New MemoryStream()
-                    Await stream.CopyToAsync(mem)
-                    mem.Position = 0
-                    Dim bitmap As New BitmapImage
-                    bitmap.SetSource(mem.AsRandomAccessStream)
+                        Dim bitmap As BitmapImage = Nothing
 
-                    '---------------------------------------------------
+                        Try
+                            Dim imagenUri As Uri = New Uri(temp4.Trim, UriKind.RelativeOrAbsolute)
+                            Dim client As New HttpClient
+                            Dim response As Streams.IBuffer = Await client.GetBufferAsync(imagenUri)
+                            Dim stream As Stream = response.AsStream
+                            Dim mem As MemoryStream = New MemoryStream()
+                            Await stream.CopyToAsync(mem)
+                            mem.Position = 0
+                            bitmap = New BitmapImage
+                            bitmap.SetSource(mem.AsRandomAccessStream)
+                        Catch ex As Exception
 
-                    Dim imagen As New ImageEx
-                    imagen.Source = bitmap
-                    imagen.Stretch = Stretch.UniformToFill
+                        End Try
 
-                    Dim grid As New Grid
-                    grid.Height = 150
-                    grid.Width = 310
-                    grid.Margin = New Thickness(5, 5, 5, 5)
+                        If Not bitmap Is Nothing Then
+                            Dim imagen As New ImageEx
+                            imagen.Source = bitmap
+                            imagen.Stretch = Stretch.UniformToFill
 
-                    Dim juego As Tile = sender.Tag
-                    Dim juego_ As New Tile(juego.Titulo, juego.Ejecutable, temp3.Trim)
+                            Dim grid As New Grid
+                            grid.Height = 150
+                            grid.Width = 310
+                            grid.Margin = New Thickness(5, 5, 5, 5)
 
-                    grid.Tag = juego_
+                            Dim juego As Tile = sender.Tag
+                            Dim juego_ As New Tile(juego.Titulo, juego.Ejecutable, temp4.Trim)
 
-                    grid.Children.Add(imagen)
+                            grid.Tag = juego_
 
-                    gvTiles.Items.Add(grid)
+                            grid.Children.Add(imagen)
 
-                    boolExito = True
+                            gvTiles.Items.Add(grid)
+
+                            boolExito = True
+                        End If
+                    End If
                 End If
                 i += 1
             End While
-
-            If html.Contains("<h3>No grids found!</h3>") Then
-                boolExito = True
-                MessageBox("No grids found")
-            End If
         End If
 
         If boolExito = False Then
