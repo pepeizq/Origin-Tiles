@@ -148,7 +148,10 @@
     <value>No se ha añadido una carpeta</value>
   </data>
   <data name="Texto Tiles" xml:space="preserve">
-    <value>Selecciona un juego instalado y después una Tile para añadir el juego al menu de Inicio:</value>
+    <value>Selecciona un juego instalado y después una Tile para añadir el juego al menu de Inicio</value>
+  </data>
+  <data name="Tiles" xml:space="preserve">
+    <value>Tiles</value>
   </data>
   <data name="Titulo Tile" xml:space="preserve">
     <value>Añadir titulo</value>

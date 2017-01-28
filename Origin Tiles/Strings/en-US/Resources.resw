@@ -148,7 +148,10 @@
     <value>No folder added</value>
   </data>
   <data name="Texto Tiles" xml:space="preserve">
-    <value>Select an installed game and then a Tile to add the game in the Start menu:</value>
+    <value>Select an installed game and then a Tile to add the game in the Start menu</value>
+  </data>
+  <data name="Tiles" xml:space="preserve">
+    <value>Tiles</value>
   </data>
   <data name="Titulo Tile" xml:space="preserve">
     <value>Add title</value>
