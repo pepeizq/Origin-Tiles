@@ -45,6 +45,8 @@ Public NotInheritable Class MainPage
 
         checkboxTilesTitulo.Content = recursos.GetString("Titulo Tile")
 
+        tbTilesNumeroAviso.Text = recursos.GetString("Numero Tiles")
+
         '----------------------------------------------
 
         Dim boolOrigin As Boolean = Await Detector.Origin(tbOriginConfigPath, buttonOriginConfigPathTexto, False)
@@ -62,6 +64,15 @@ Public NotInheritable Class MainPage
             imageTileTitulo.Source = New BitmapImage(New Uri(Me.BaseUri, "/Assets/Otros/titulo1.png"))
         Else
             imageTileTitulo.Source = New BitmapImage(New Uri(Me.BaseUri, "/Assets/Otros/titulo0.png"))
+        End If
+
+        If tbTilesNumero.Text = Nothing Then
+            If Not ApplicationData.Current.LocalSettings.Values("numerostiles") = Nothing Then
+                tbTilesNumero.Text = ApplicationData.Current.LocalSettings.Values("numerostiles")
+            Else
+                tbTilesNumero.Text = 12
+                ApplicationData.Current.LocalSettings.Values("numerostiles") = tbTilesNumero.Text
+            End If
         End If
 
     End Sub
@@ -182,7 +193,7 @@ Public NotInheritable Class MainPage
                         End While
 
                         If tituloBool = False Then
-                            Dim juego As New Tile(titulo, ejecutable, Nothing)
+                            Dim juego As New Tile(titulo, ejecutable, Nothing, Nothing)
                             listaJuegos.Add(juego)
 
                             Dim texto As New TextBlock
@@ -190,7 +201,6 @@ Public NotInheritable Class MainPage
                             texto.Tag = juego
 
                             lvJuegos.Items.Add(texto)
-
                         End If
                     End If
                 Next
@@ -239,10 +249,18 @@ Public NotInheritable Class MainPage
         End Try
 
         Dim boolExito As Boolean = False
+        Dim listaFinal As New List(Of Tile)
+        Dim tope As Integer = 12
+
+        Try
+            tope = ApplicationData.Current.LocalSettings.Values("numerostiles")
+        Catch ex As Exception
+
+        End Try
 
         If Not html = Nothing Then
             Dim i As Integer = 0
-            While i < 12
+            While i < tope
                 If html.Contains("<div class=" + ChrW(34) + "rg_meta" + ChrW(34) + ">") Then
                     Dim temp, temp2, temp3, temp4 As String
                     Dim int, int2, int3, int4 As Integer
@@ -262,43 +280,12 @@ Public NotInheritable Class MainPage
                         int4 = temp3.IndexOf(ChrW(34))
                         temp4 = temp3.Remove(int4, temp3.Length - int4)
 
-                        Dim bitmap As BitmapImage = Nothing
+                        temp4 = temp4.Trim
+                        Dim juego As Tile = sender.Tag
+                        Dim juego_ As New Tile(juego.Titulo, juego.Ejecutable, temp4, juego)
+                        listaFinal.Add(juego_)
 
-                        Try
-                            Dim imagenUri As Uri = New Uri(temp4.Trim, UriKind.RelativeOrAbsolute)
-                            Dim client As New HttpClient
-                            Dim response As Streams.IBuffer = Await client.GetBufferAsync(imagenUri)
-                            Dim stream As Stream = response.AsStream
-                            Dim mem As MemoryStream = New MemoryStream()
-                            Await stream.CopyToAsync(mem)
-                            mem.Position = 0
-                            bitmap = New BitmapImage
-                            bitmap.SetSource(mem.AsRandomAccessStream)
-                        Catch ex As Exception
-
-                        End Try
-
-                        If Not bitmap Is Nothing Then
-                            Dim imagen As New ImageEx
-                            imagen.Source = bitmap
-                            imagen.Stretch = Stretch.UniformToFill
-
-                            Dim grid As New Grid
-                            grid.Height = 150
-                            grid.Width = 310
-                            grid.Margin = New Thickness(5, 5, 5, 5)
-
-                            Dim juego As Tile = sender.Tag
-                            Dim juego_ As New Tile(juego.Titulo, juego.Ejecutable, temp4.Trim)
-
-                            grid.Tag = juego_
-
-                            grid.Children.Add(imagen)
-
-                            gvTiles.Items.Add(grid)
-
-                            boolExito = True
-                        End If
+                        boolExito = True
                     End If
                 End If
                 i += 1
@@ -321,6 +308,8 @@ Public NotInheritable Class MainPage
 
             wb.Navigate(sender.Source)
         Else
+            gvTiles.ItemsSource = listaFinal
+
             lvJuegos.IsEnabled = True
             gvTiles.IsEnabled = True
             prTiles.Visibility = Visibility.Collapsed
@@ -330,8 +319,7 @@ Public NotInheritable Class MainPage
 
     Private Async Sub gvTiles_ItemClick(sender As Object, e As ItemClickEventArgs) Handles gvTiles.ItemClick
 
-        Dim grid As Grid = e.ClickedItem
-        Dim tile As Tile = grid.Tag
+        Dim tile As Tile = e.ClickedItem
 
         Dim ficheroImagen As StorageFile = Await ApplicationData.Current.LocalFolder.CreateFileAsync("headerorigin.png", CreationCollisionOption.GenerateUniqueName)
         Dim downloader As BackgroundDownloader = New BackgroundDownloader()
@@ -361,7 +349,11 @@ Public NotInheritable Class MainPage
             nuevaTile.VisualElements.ShowNameOnWide310x150Logo = True
         End If
 
-        Await nuevaTile.RequestCreateForSelectionAsync(rect)
+        Try
+            Await nuevaTile.RequestCreateForSelectionAsync(rect)
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
@@ -408,6 +400,19 @@ Public NotInheritable Class MainPage
     Private Sub buttonConfigTiles_Click(sender As Object, e As RoutedEventArgs) Handles buttonConfigTiles.Click
 
         GridConfigVisibilidad(gridConfigTiles, buttonConfigTiles)
+
+    End Sub
+
+    Private Sub tbTilesNumero_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbTilesNumero.TextChanged
+
+        Dim numero As Integer
+
+        Try
+            numero = Integer.Parse(tbTilesNumero.Text)
+            ApplicationData.Current.LocalSettings.Values("numerostiles") = numero
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 End Class

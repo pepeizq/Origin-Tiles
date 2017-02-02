@@ -141,6 +141,9 @@
   <data name="Boton Web" xml:space="preserve">
     <value>Más Apps</value>
   </data>
+  <data name="Numero Tiles" xml:space="preserve">
+    <value>Número de Tiles a cargar:</value>
+  </data>
   <data name="Texto Origin Config" xml:space="preserve">
     <value>Añade la carpeta C:\ProgramData\Origin\LocalContent</value>
   </data>

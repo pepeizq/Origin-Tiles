@@ -36,6 +36,15 @@
         </CommandBar>
     </Page.TopAppBar>
 
+    <Page.Resources>
+        <DataTemplate x:Key="Tile">
+            <Grid Tag="{Binding Tile}" Height="150" Width="310">
+                <controls:ImageEx Source="{Binding Imagen}" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -57,7 +66,7 @@
                         <ListView x:Name="lvJuegos" IsItemClickEnabled="True"/>
                     </ScrollViewer>
 
-                    <GridView x:Name="gvTiles" Grid.Column="1" IsItemClickEnabled="True" Padding="15,0,0,0"/>
+                    <controls:AdaptiveGridView x:Name="gvTiles" Grid.Column="1" ItemTemplate="{StaticResource Tile}" IsItemClickEnabled="True" Padding="10,0,0,0" DesiredWidth="310"/>
 
                     <TextBlock x:Name="tbMensajeTiles" Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <ProgressRing x:Name="prTiles" Grid.Column="1" Visibility="Collapsed" IsActive="True" Height="48" Width="48"/>
@@ -116,10 +125,21 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <CheckBox x:Name="checkboxTilesTitulo" Grid.Row="0" Padding="10,0" VerticalContentAlignment="Center" Margin="0,0,0,10"/>
                         <controls:ImageEx x:Name="imageTileTitulo" Grid.Row="1" HorizontalAlignment="Left" Width="206" Height="102"/>
+
+                        <Grid Grid.Row="2" Margin="0,20,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock x:Name="tbTilesNumeroAviso" Grid.Column="0" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBox x:Name="tbTilesNumero" Grid.Column="1" Width="100"/>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
