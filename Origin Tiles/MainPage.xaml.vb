@@ -193,7 +193,7 @@ Public NotInheritable Class MainPage
                         End While
 
                         If tituloBool = False Then
-                            Dim juego As New Tile(titulo, ejecutable, Nothing, Nothing)
+                            Dim juego As New Tile(titulo, ejecutable, Nothing, Nothing, Nothing)
                             listaJuegos.Add(juego)
 
                             Dim texto As New TextBlock
@@ -235,7 +235,11 @@ Public NotInheritable Class MainPage
 
     Private Async Sub wb_NavigationCompleted(sender As WebView, e As WebViewNavigationCompletedEventArgs)
 
-        gvTiles.Items.Clear()
+        Try
+            gvTiles.Items.Clear()
+        Catch ex As Exception
+
+        End Try
 
         Dim lista As New List(Of String)
         lista.Add("document.documentElement.outerHTML;")
@@ -250,6 +254,7 @@ Public NotInheritable Class MainPage
 
         Dim boolExito As Boolean = False
         Dim listaFinal As New List(Of Tile)
+
         Dim tope As Integer = 12
 
         Try
@@ -280,9 +285,25 @@ Public NotInheritable Class MainPage
                         int4 = temp3.IndexOf(ChrW(34))
                         temp4 = temp3.Remove(int4, temp3.Length - int4)
 
-                        temp4 = temp4.Trim
+                        Dim imagen As String = temp4.Trim
+
+                        Dim descripcion As String = Nothing
+
+                        If temp2.Contains(ChrW(34) + "pt" + ChrW(34)) Then
+                            Dim temp5, temp6 As String
+                            Dim int5, int6 As Integer
+
+                            int5 = temp2.IndexOf(ChrW(34) + "pt" + ChrW(34))
+                            temp5 = temp2.Remove(0, int5 + 6)
+
+                            int6 = temp5.IndexOf(ChrW(34))
+                            temp6 = temp5.Remove(int6, temp5.Length - int6)
+
+                            descripcion = temp6.Trim
+                        End If
+
                         Dim juego As Tile = sender.Tag
-                        Dim juego_ As New Tile(juego.Titulo, juego.Ejecutable, temp4, juego)
+                        Dim juego_ As New Tile(juego.Titulo, juego.Ejecutable, imagen, descripcion, juego)
                         listaFinal.Add(juego_)
 
                         boolExito = True
