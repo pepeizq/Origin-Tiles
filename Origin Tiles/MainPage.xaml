@@ -5,6 +5,7 @@
     xmlns:local="using:Origin_Tiles"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:wrapPanel="using:Microsoft.Toolkit.Uwp.UI.Controls.WrapPanel"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded">
@@ -73,7 +74,13 @@
                         <ListView x:Name="lvJuegos" IsItemClickEnabled="True"/>
                     </ScrollViewer>
 
-                    <controls:AdaptiveGridView x:Name="gvTiles" Grid.Column="1" ItemTemplate="{StaticResource Tile}" IsItemClickEnabled="True" Padding="10,0,0,0" DesiredWidth="310" animations:ReorderGridAnimation.Duration="250"/>
+                    <controls:AdaptiveGridView x:Name="gvTiles" Grid.Column="1" ItemTemplate="{StaticResource Tile}" IsItemClickEnabled="True" Padding="10,0,0,0" DesiredWidth="310" animations:ReorderGridAnimation.Duration="250">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <wrapPanel:WrapPanel HorizontalAlignment="Center" Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </controls:AdaptiveGridView>
 
                     <TextBlock x:Name="tbMensajeTiles" Grid.Column="1" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <ProgressRing x:Name="prTiles" Grid.Column="1" Visibility="Collapsed" IsActive="True" Height="48" Width="48"/>
