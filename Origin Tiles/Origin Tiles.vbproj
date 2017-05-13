@@ -10,8 +10,8 @@
     <AssemblyName>Origin Tiles</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.15063.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
@@ -20,6 +20,7 @@
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
     <PackageCertificateThumbprint>1EA349E4089C36EEB6FED145E94AE21C07C659B3</PackageCertificateThumbprint>
+    <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -102,7 +103,6 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="Origin Tiles_StoreKey.pfx" />
-    <None Include="project.json" />
     <PRIResource Include="Strings\es-ES\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
@@ -111,14 +111,16 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Clases\Tile.vb" />
-    <Compile Include="Clases\Tweet.vb" />
     <Compile Include="MainPage.xaml.vb">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modulos\Acrilico.vb" />
+    <Compile Include="Modulos\Buscador.vb" />
+    <Compile Include="Modulos\Config.vb" />
     <Compile Include="Modulos\Decompiladores.vb" />
-    <Compile Include="Modulos\Detector.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
-    <Compile Include="Modulos\Twitter.vb" />
+    <Compile Include="Modulos\Origin.vb" />
+    <Compile Include="Modulos\Tiles.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -128,44 +130,28 @@
     <None Include="Origin Tiles_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\AppList\AppList.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\AppList\AppList.altform-unplated_targetsize-24.png" />
+    <Content Include="Assets\AppList\AppList.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\AppList\AppList.altform-unplated_targetsize-32.png" />
+    <Content Include="Assets\AppList\AppList.altform-unplated_targetsize-48.png" />
     <Content Include="Assets\AppList\AppList.scale-100.png" />
     <Content Include="Assets\AppList\AppList.scale-125.png" />
     <Content Include="Assets\AppList\AppList.scale-150.png" />
     <Content Include="Assets\AppList\AppList.scale-200.png" />
     <Content Include="Assets\AppList\AppList.scale-400.png" />
     <Content Include="Assets\AppList\AppList.targetsize-16.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-16_altform-unplated.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-20.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-20_altform-unplated.png" />
     <Content Include="Assets\AppList\AppList.targetsize-24.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\AppList\AppList.targetsize-256.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-256_altform-unplated.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-30.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-30_altform-unplated.png" />
     <Content Include="Assets\AppList\AppList.targetsize-32.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-32_altform-unplated.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-36.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-36_altform-unplated.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-40.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-40_altform-unplated.png" />
     <Content Include="Assets\AppList\AppList.targetsize-48.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-48_altform-unplated.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-60.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-60_altform-unplated.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-64.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-64_altform-unplated.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-72.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-72_altform-unplated.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-80.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-80_altform-unplated.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-96.png" />
-    <Content Include="Assets\AppList\AppList.targetsize-96_altform-unplated.png" />
     <Content Include="Assets\Badge\Badge.scale-100.png" />
     <Content Include="Assets\Badge\Badge.scale-125.png" />
     <Content Include="Assets\Badge\Badge.scale-150.png" />
     <Content Include="Assets\Badge\Badge.scale-200.png" />
     <Content Include="Assets\Badge\Badge.scale-400.png" />
+    <Content Include="Assets\horigin_logo.png" />
+    <Content Include="Assets\horigin_logo_mini3.png" />
     <Content Include="Assets\Large\Large310x310Logo.scale-100.png" />
     <Content Include="Assets\Large\Large310x310Logo.scale-125.png" />
     <Content Include="Assets\Large\Large310x310Logo.scale-150.png" />
@@ -176,9 +162,8 @@
     <Content Include="Assets\Medium\Medium150x150Logo.scale-150.png" />
     <Content Include="Assets\Medium\Medium150x150Logo.scale-200.png" />
     <Content Include="Assets\Medium\Medium150x150Logo.scale-400.png" />
-    <Content Include="Assets\origin_logo.svg" />
-    <Content Include="Assets\Otros\titulo0.png" />
-    <Content Include="Assets\Otros\titulo1.png" />
+    <Content Include="Assets\horigin_logo_mini2.png" />
+    <Content Include="Assets\horigin_logo_mini1.png" />
     <Content Include="Assets\Small\Small71x71Logo.scale-100.png" />
     <Content Include="Assets\Small\Small71x71Logo.scale-125.png" />
     <Content Include="Assets\Small\Small71x71Logo.scale-150.png" />
@@ -189,12 +174,12 @@
     <Content Include="Assets\SplashScreen\SplashScreen.scale-150.png" />
     <Content Include="Assets\SplashScreen\SplashScreen.scale-200.png" />
     <Content Include="Assets\SplashScreen\SplashScreen.scale-400.png" />
-    <Content Include="Assets\Store\StoreLogo.scale-100.png" />
-    <Content Include="Assets\Store\StoreLogo.scale-125.png" />
-    <Content Include="Assets\Store\StoreLogo.scale-150.png" />
-    <Content Include="Assets\Store\StoreLogo.scale-200.png" />
-    <Content Include="Assets\Store\StoreLogo.scale-400.png" />
-    <Content Include="Assets\twitter_logo.png" />
+    <Content Include="Assets\steam_logo.png" />
+    <Content Include="Assets\StoreLogo\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo\StoreLogo.scale-400.png" />
     <Content Include="Assets\Wide\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide\Wide310x150Logo.scale-150.png" />
@@ -243,7 +228,20 @@
     <Import Include="Windows.UI.Xaml.Media.Imaging" />
     <Import Include="Windows.UI.Xaml.Navigation" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
+      <Version>5.3.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
+      <Version>1.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
+      <Version>1.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>1.4.1</Version>
+    </PackageReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

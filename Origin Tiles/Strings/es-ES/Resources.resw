@@ -120,6 +120,9 @@
   <data name="App" xml:space="preserve">
     <value>Aplicación</value>
   </data>
+  <data name="Añadir Tile" xml:space="preserve">
+    <value>Añadir Tile</value>
+  </data>
   <data name="Boton Añadir" xml:space="preserve">
     <value>Añadir</value>
   </data>
@@ -129,7 +132,7 @@
   <data name="Boton Compartir" xml:space="preserve">
     <value>Compartir</value>
   </data>
-  <data name="Boton Configuracion" xml:space="preserve">
+  <data name="Boton Config" xml:space="preserve">
     <value>Configuración</value>
   </data>
   <data name="Boton Contactar" xml:space="preserve">
@@ -141,25 +144,28 @@
   <data name="Boton Web" xml:space="preserve">
     <value>Más Apps</value>
   </data>
-  <data name="Numero Tiles" xml:space="preserve">
-    <value>Número de Tiles a cargar:</value>
+  <data name="No Config" xml:space="preserve">
+    <value>No se han detectado juegos, ve a Configuración</value>
   </data>
-  <data name="Texto Origin Config" xml:space="preserve">
+  <data name="Origin Carpeta Añadir" xml:space="preserve">
     <value>Añade la carpeta C:\ProgramData\Origin\LocalContent</value>
   </data>
-  <data name="Texto Origin No Config" xml:space="preserve">
+  <data name="Origin Carpeta No Config" xml:space="preserve">
     <value>No se ha añadido una carpeta</value>
   </data>
-  <data name="Texto Tiles" xml:space="preserve">
-    <value>Selecciona un juego instalado y después una Tile para añadir el juego al menu de Inicio</value>
+  <data name="Seleccionar" xml:space="preserve">
+    <value>Selecciona una imagen</value>
+  </data>
+  <data name="Si Config" xml:space="preserve">
+    <value>Selecciona un juego para cargar las Tiles disponibles</value>
+  </data>
+  <data name="Tile Logo" xml:space="preserve">
+    <value>Añadir icono</value>
+  </data>
+  <data name="Tile Titulo" xml:space="preserve">
+    <value>Añadir titulo</value>
   </data>
   <data name="Tiles" xml:space="preserve">
     <value>Tiles</value>
-  </data>
-  <data name="Titulo Tile" xml:space="preserve">
-    <value>Añadir titulo</value>
-  </data>
-  <data name="Twitter" xml:space="preserve">
-    <value>Enseñar últimas noticias de @pepeizqapps</value>
   </data>
 </root>
