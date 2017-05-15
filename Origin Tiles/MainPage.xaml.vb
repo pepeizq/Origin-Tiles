@@ -1,14 +1,8 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
-Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Windows.ApplicationModel.Core
-Imports Windows.ApplicationModel.DataTransfer
-Imports Windows.Networking.BackgroundTransfer
 Imports Windows.Storage
-Imports Windows.Storage.AccessCache
 Imports Windows.System
 Imports Windows.UI
-Imports Windows.UI.StartScreen
-Imports Windows.Web.Http
 
 Public NotInheritable Class MainPage
     Inherits Page
@@ -37,7 +31,11 @@ Public NotInheritable Class MainPage
         botonTilesTexto.Text = recursos.GetString("Tiles")
         botonConfigTexto.Text = recursos.GetString("Boton Config")
         botonVotarTexto.Text = recursos.GetString("Boton Votar")
+        botonMasCosasTexto.Text = recursos.GetString("Boton Cosas")
+
+        botonContactarTexto.Text = recursos.GetString("Boton Contactar")
         botonMasAppsTexto.Text = recursos.GetString("Boton Web")
+        botonCodigoFuenteTexto.Text = recursos.GetString("Boton Codigo Fuente")
 
         tbNoJuegosOrigin.Text = recursos.GetString("No Config")
         tbSiJuegosOrigin.Text = recursos.GetString("Si Config")
@@ -99,45 +97,33 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Sub BotonMasApps_Click(sender As Object, e As RoutedEventArgs) Handles botonMasApps.Click
+    Private Sub BotonMasCosas_Click(sender As Object, e As RoutedEventArgs) Handles botonMasCosas.Click
 
-        If popupMasApps.IsOpen = True Then
-            botonMasApps.Background = New SolidColorBrush(Colors.Transparent)
-            popupMasApps.IsOpen = False
+        If popupMasCosas.IsOpen = True Then
+            botonMasCosas.Background = New SolidColorBrush(Colors.Transparent)
+            popupMasCosas.IsOpen = False
         Else
-            botonMasApps.Background = New SolidColorBrush(Colors.Goldenrod)
-            popupMasApps.IsOpen = True
+            botonMasCosas.Background = New SolidColorBrush(Colors.Goldenrod)
+            popupMasCosas.IsOpen = True
         End If
 
     End Sub
 
-    Private Async Sub BotonAppSteamTiles_Click(sender As Object, e As RoutedEventArgs) Handles botonAppSteamTiles.Click
+    Private Async Sub BotonMasApps_Click(sender As Object, e As RoutedEventArgs) Handles botonMasApps.Click
 
-        Await Launcher.LaunchUriAsync(New Uri("ms-windows-store://pdp/?productid=9nblggh51sb3"))
-
-    End Sub
-
-    Private Async Sub BotonAppSteamDeals_Click(sender As Object, e As RoutedEventArgs) Handles botonAppSteamDeals.Click
-
-        Await Launcher.LaunchUriAsync(New Uri("ms-windows-store://pdp/?productid=9p7836m1tw15"))
+        Await Launcher.LaunchUriAsync(New Uri("https://pepeizqapps.com/"))
 
     End Sub
 
-    Private Async Sub BotonAppSteamCategories_Click(sender As Object, e As RoutedEventArgs) Handles botonAppSteamCategories.Click
+    Private Async Sub BotonContactar_Click(sender As Object, e As RoutedEventArgs) Handles botonContactar.Click
 
-        Await Launcher.LaunchUriAsync(New Uri("ms-windows-store://pdp/?productid=9p54scg1n6bm"))
-
-    End Sub
-
-    Private Async Sub BotonAppSteamBridge_Click(sender As Object, e As RoutedEventArgs) Handles botonAppSteamBridge.Click
-
-        Await Launcher.LaunchUriAsync(New Uri("ms-windows-store://pdp/?productid=9nblggh441c9"))
+        Await Launcher.LaunchUriAsync(New Uri("https://pepeizqapps.com/contact/"))
 
     End Sub
 
-    Private Async Sub BotonAppSteamSkins_Click(sender As Object, e As RoutedEventArgs) Handles botonAppSteamSkins.Click
+    Private Async Sub BotonCodigoFuente_Click(sender As Object, e As RoutedEventArgs) Handles botonCodigoFuente.Click
 
-        Await Launcher.LaunchUriAsync(New Uri("ms-windows-store://pdp/?productid=9nblggh55b7f"))
+        Await Launcher.LaunchUriAsync(New Uri("https://github.com/pepeizq/Origin-Tiles"))
 
     End Sub
 
