@@ -67,7 +67,7 @@ Module Buscador
         Dim boolExito As Boolean = False
         Dim listaFinal As New List(Of Tile)
 
-        Dim tope As Integer = 12
+        Dim tope As Integer = 50
 
         If Not html = Nothing Then
             Dim i As Integer = 0
@@ -93,18 +93,42 @@ Module Buscador
 
                         Dim imagen As String = temp4.Trim
 
-                        Dim codigo As ApplicationDataContainer = ApplicationData.Current.LocalSettings
+                        If Not imagen = Nothing Then
+                            Dim boolImagen As Boolean = False
 
-                        If codigo.Values("codigo" + tienda) Is Nothing Then
-                            codigo.Values("codigo" + tienda) = "0"
+                            If imagen.Contains("steam.cryotank.net") Then
+                                boolImagen = True
+                            ElseIf imagen.Contains("steamgriddb.com") Then
+                                boolImagen = True
+                            ElseIf imagen.Contains("steamstatic.com") Then
+                                boolImagen = True
+                            ElseIf imagen.Contains("deviantart.net") Then
+                                boolImagen = True
+                            ElseIf imagen.Contains("abload.de") Then
+                                boolImagen = True
+                            ElseIf imagen.Contains("redd.it") Then
+                                boolImagen = True
+                            ElseIf Imagen.Contains("bp.blogspot.com") Then
+                                boolImagen = True
+                            ElseIf imagen.Contains("digitarius.net") Then
+                                boolImagen = True
+                            End If
+
+                            If boolImagen = True Then
+                                Dim codigo As ApplicationDataContainer = ApplicationData.Current.LocalSettings
+
+                                If codigo.Values("codigo" + tienda) Is Nothing Then
+                                    codigo.Values("codigo" + tienda) = "0"
+                                End If
+
+                                Dim numCodigo As String = Integer.Parse(codigo.Values("codigo" + tienda)) + 1
+                                codigo.Values("codigo" + tienda) = numCodigo
+
+                                Dim juego As Tile = sender.Tag
+                                Dim juego_ As New Tile(juego.Titulo, tienda + codigo.Values("codigo" + tienda), juego.Enlace, New Uri(imagen), tienda, juego)
+                                listaFinal.Add(juego_)
+                            End If
                         End If
-
-                        Dim numCodigo As String = Integer.Parse(codigo.Values("codigo" + tienda)) + 1
-                        codigo.Values("codigo" + tienda) = numCodigo
-
-                        Dim juego As Tile = sender.Tag
-                        Dim juego_ As New Tile(juego.Titulo, tienda + codigo.Values("codigo" + tienda), juego.Enlace, New Uri(imagen), tienda, juego)
-                        listaFinal.Add(juego_)
 
                         boolExito = True
                     End If

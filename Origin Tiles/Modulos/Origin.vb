@@ -59,14 +59,61 @@ Module Origin
 
                             titulo = titulo.Replace("Mirrors Edge", "Mirror's Edge")
 
-                            Dim ejecutable As String = "origin://launchgame/" + fichero.DisplayName
+                            Dim ejecutable As String = Nothing
 
-                            If ejecutable.Contains("OFB-EAST") Then
-                                ejecutable = ejecutable.Replace("OFB-EAST", "OFB-EAST:")
+                            If fichero.FileType = ".ddc" Then
+                                Dim ficheroDDC As StorageFile = fichero
+
+                                Dim texto As String = Await FileIO.ReadTextAsync(ficheroDDC)
+
+                                If Not texto = Nothing Then
+                                    If texto.Contains(ChrW(34) + "productId" + ChrW(34)) Then
+                                        Dim temp, temp2 As String
+                                        Dim int, int2 As Integer
+
+                                        int = texto.IndexOf(ChrW(34) + "productId" + ChrW(34))
+                                        temp = texto.Remove(0, int + 11)
+
+                                        int = temp.IndexOf(ChrW(34))
+                                        temp = temp.Remove(0, int + 1)
+
+                                        int2 = temp.IndexOf(ChrW(34))
+                                        temp2 = temp.Remove(int2, temp.Length - int2)
+
+                                        ejecutable = "origin://launchgame/" + temp2
+                                    End If
+                                End If
+                            ElseIf fichero.FileType = ".mfst" Then
+                                Dim ficheroMFST As StorageFile = fichero
+
+                                Dim texto As String = Await FileIO.ReadTextAsync(ficheroMFST)
+
+                                If Not texto = Nothing Then
+                                    If texto.Contains("&id=") Then
+                                        Dim temp, temp2 As String
+                                        Dim int, int2 As Integer
+
+                                        int = texto.IndexOf("&id=")
+                                        temp = texto.Remove(0, int + 4)
+
+                                        int2 = temp.IndexOf("&")
+                                        temp2 = temp.Remove(int2, temp.Length - int2)
+
+                                        ejecutable = "origin://launchgame/" + temp2
+                                    End If
+                                End If
                             End If
 
-                            If ejecutable.Contains("DR") Then
-                                ejecutable = ejecutable.Replace("DR", "DR:")
+                            If ejecutable = Nothing Then
+                                ejecutable = "origin://launchgame/" + fichero.DisplayName
+
+                                If ejecutable.Contains("OFB-EAST") Then
+                                    ejecutable = ejecutable.Replace("OFB-EAST", "OFB-EAST:")
+                                End If
+
+                                If ejecutable.Contains("DR") Then
+                                    ejecutable = ejecutable.Replace("DR", "DR:")
+                                End If
                             End If
 
                             Dim tituloBool As Boolean = False
