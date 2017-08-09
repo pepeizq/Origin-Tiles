@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="5078pepeizq.HoriginTiles" Publisher="CN=C91088FC-231C-4E13-86D1-5F9658173DA7" Version="1.0.9.0" />
+  <Identity Name="5078pepeizq.HoriginTiles" Publisher="CN=C91088FC-231C-4E13-86D1-5F9658173DA7" Version="1.0.10.0" />
   <mp:PhoneIdentity PhoneProductId="e1806247-b898-4be7-b7a0-7299cb281f8c" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Horigin Tiles</DisplayName>
     <PublisherDisplayName>pepeizq</PublisherDisplayName>
-    <Logo>assets\StoreLogo\StoreLogo.png</Logo>
+    <Logo>assets\Logos\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
@@ -15,16 +15,16 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Origin_Tiles.App">
-      <uap:VisualElements DisplayName="Horigin Tiles" Square150x150Logo="assets\Medium\Medium150x150Logo.png" Square44x44Logo="assets\AppList\AppList.png" Description="https://pepeizqapps.com" BackgroundColor="darkOrange">
-        <uap:DefaultTile Wide310x150Logo="assets\Wide\Wide310x150Logo.png" ShortName="Horigin Tiles" Square310x310Logo="assets\Large\Large310x310Logo.png" Square71x71Logo="assets\Small\Small71x71Logo.png">
+      <uap:VisualElements DisplayName="Horigin Tiles" Square150x150Logo="assets\Logos\Medium150x150Logo.png" Square44x44Logo="assets\Logos\AppList.png" Description="https://pepeizqapps.com" BackgroundColor="darkOrange">
+        <uap:DefaultTile Wide310x150Logo="assets\Logos\Wide310x150Logo.png" ShortName="Horigin Tiles" Square310x310Logo="assets\Logos\Large310x310Logo.png" Square71x71Logo="assets\Logos\Small71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
             <uap:ShowOn Tile="wide310x150Logo" />
             <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="assets\SplashScreen\SplashScreen.png" BackgroundColor="darkOrange" />
-        <uap:LockScreen BadgeLogo="assets\Badge\Badge.png" Notification="badge" />
+        <uap:SplashScreen Image="assets\Logos\SplashScreen.png" BackgroundColor="darkOrange" />
+        <uap:LockScreen BadgeLogo="assets\Logos\Badge.png" Notification="badge" />
       </uap:VisualElements>
     </Application>
   </Applications>
