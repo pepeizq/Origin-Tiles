@@ -72,11 +72,11 @@ Module Buscador
         If Not html = Nothing Then
             Dim i As Integer = 0
             While i < tope
-                If html.Contains("<div class=" + ChrW(34) + "rg_meta" + ChrW(34) + ">") Then
+                If html.Contains("<div class=" + ChrW(34) + "rg_meta") Then
                     Dim temp, temp2, temp3, temp4 As String
                     Dim int, int2, int3, int4 As Integer
 
-                    int = html.IndexOf("<div class=" + ChrW(34) + "rg_meta" + ChrW(34) + ">")
+                    int = html.IndexOf("<div class=" + ChrW(34) + "rg_meta")
                     temp = html.Remove(0, int + 5)
 
                     html = temp
@@ -108,7 +108,7 @@ Module Buscador
                                 boolImagen = True
                             ElseIf imagen.Contains("redd.it") Then
                                 boolImagen = True
-                            ElseIf Imagen.Contains("bp.blogspot.com") Then
+                            ElseIf imagen.Contains("bp.blogspot.com") Then
                                 boolImagen = True
                             ElseIf imagen.Contains("digitarius.net") Then
                                 boolImagen = True
