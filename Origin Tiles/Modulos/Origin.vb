@@ -155,7 +155,18 @@ Module Origin
             listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
             For Each juego In listaJuegos
-                CargarTile(juego)
+                Dim textoTitulo As String = juego.Titulo
+                textoTitulo = textoTitulo.Replace(" ", "%20")
+
+                Dim wb As New WebView(WebViewExecutionMode.SeparateThread) With {
+                    .Tag = juego
+                    }
+
+                AddHandler wb.NavigationCompleted, AddressOf Wb_NavigationCompleted
+
+                wb.Navigate(New Uri("https://www.google.com/search?q=" + textoTitulo + "%20originassets.akamaized.net&biw=1280&bih=886&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjw8KHftrrRAhUN8GMKHdzFBQMQ_AUICCgB&gws_rd=cr,ssl&ei=H1J2WLa_FIPcjwSRvLSQCg"))
+
+                Await Task.Delay(5000)
             Next
 
             If boolBuscarCarpeta = True Then
@@ -171,35 +182,14 @@ Module Origin
 
     End Sub
 
-    Public Sub CargarTile(juego As Tile)
-
-        Dim textoTitulo As String = juego.Titulo
-
-        textoTitulo = textoTitulo.Replace(" ", "%20")
-
-        'Try
-        '    Await WebView.ClearTemporaryWebDataAsync()
-        'Catch ex As Exception
-
-        'End Try
-
-        Dim wb As New WebView With {
-            .Tag = juego
-            }
-
-        AddHandler wb.NavigationCompleted, AddressOf Wb_NavigationCompleted
-
-        wb.Navigate(New Uri("https://www.google.com/search?q=" + textoTitulo + "%20originassets.akamaized.net&biw=1280&bih=886&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjw8KHftrrRAhUN8GMKHdzFBQMQ_AUICCgB&gws_rd=cr,ssl&ei=H1J2WLa_FIPcjwSRvLSQCg"))
-
-    End Sub
-
     Private Async Sub Wb_NavigationCompleted(sender As WebView, e As WebViewNavigationCompletedEventArgs)
+
+        Dim juego As Tile = sender.Tag
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
         Dim gvTiles As GridView = pagina.FindName("gridViewTilesOrigin")
-
 
         Dim lista As New List(Of String) From {
             "document.documentElement.outerHTML;"
@@ -247,6 +237,14 @@ Module Origin
                                 boolImagen = True
                             End If
 
+                            Dim tempTitulo As String = juego.Titulo
+                            tempTitulo = tempTitulo.Replace(" ", "-")
+                            tempTitulo = tempTitulo.ToLower
+
+                            If Not temp2.Contains("/" + tempTitulo + "/") Then
+                                boolImagen = False
+                            End If
+
                             If boolImagen = True Then
                                 Dim codigo As ApplicationDataContainer = ApplicationData.Current.LocalSettings
 
@@ -256,8 +254,6 @@ Module Origin
 
                                 Dim numCodigo As String = Integer.Parse(codigo.Values("codigoOrigin")) + 1
                                 codigo.Values("codigoOrigin") = numCodigo
-
-                                Dim juego As Tile = sender.Tag
 
                                 juego.ID = numCodigo
                                 juego.Imagen = New Uri(imagenUrl)
