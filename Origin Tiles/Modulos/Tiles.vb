@@ -2,6 +2,7 @@
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Windows.Networking.BackgroundTransfer
 Imports Windows.Storage
+Imports Windows.UI
 Imports Windows.UI.Notifications
 Imports Windows.UI.StartScreen
 
@@ -18,6 +19,7 @@ Module Tiles
 
         nuevaTile.VisualElements.Wide310x150Logo = New Uri("ms-appdata:///local/" + ficheroImagen.Name, UriKind.RelativeOrAbsolute)
         nuevaTile.VisualElements.Square310x310Logo = New Uri("ms-appdata:///local/" + ficheroImagen.Name, UriKind.RelativeOrAbsolute)
+        nuevaTile.VisualElements.BackgroundColor = Colors.Transparent
 
         Await nuevaTile.RequestCreateAsync()
 
@@ -51,9 +53,8 @@ Module Tiles
 
         '-----------------------
 
-        Dim contenidoWide As TileBindingContentAdaptive = New TileBindingContentAdaptive With {
-            .BackgroundImage = fondoImagen
-        }
+        Dim contenidoWide As TileBindingContentAdaptive = New TileBindingContentAdaptive
+        contenidoWide.Children.Add(imagen)
 
         If Not imagenDRM Is Nothing Then
             contenidoWide.Children.Add(imagenDRM)
@@ -91,8 +92,9 @@ Module Tiles
 
         '-----------------------
 
-        Dim contenidoLarge As TileBindingContentAdaptive = New TileBindingContentAdaptive
-        contenidoLarge.Children.Add(imagen)
+        Dim contenidoLarge As TileBindingContentAdaptive = New TileBindingContentAdaptive With {
+            .BackgroundImage = fondoImagen
+        }
 
         If Not imagenDRM Is Nothing Then
             contenidoLarge.Children.Add(imagenDRM)
