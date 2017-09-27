@@ -144,10 +144,11 @@ Module Origin
             panelAvisoNoJuegos.Visibility = Visibility.Collapsed
             gridSeleccionar.Visibility = Visibility.Visible
 
-            Dim gvTiles As GridView = pagina.FindName("gridViewTilesOrigin")
+            Dim gv As GridView = pagina.FindName("gridViewTilesOrigin")
+            gv.IsEnabled = False
 
             Try
-                gvTiles.Items.Clear()
+                gv.Items.Clear()
             Catch ex As Exception
 
             End Try
@@ -172,6 +173,8 @@ Module Origin
             If boolBuscarCarpeta = True Then
                 Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
             End If
+
+            gv.IsEnabled = True
         Else
             panelAvisoNoJuegos.Visibility = Visibility.Visible
             gridSeleccionar.Visibility = Visibility.Collapsed
