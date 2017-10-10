@@ -3,7 +3,7 @@
   <Identity Name="5078pepeizq.HoriginTiles" Publisher="CN=C91088FC-231C-4E13-86D1-5F9658173DA7" Version="1.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="e1806247-b898-4be7-b7a0-7299cb281f8c" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Horigin Tiles</DisplayName>
+    <DisplayName>Origin PinTiles</DisplayName>
     <PublisherDisplayName>pepeizq</PublisherDisplayName>
     <Logo>assets\Logos\StoreLogo.png</Logo>
   </Properties>
