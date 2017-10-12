@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddTile.Text" xml:space="preserve">
-    <value>Add Tile</value>
+    <value>Pin Tile</value>
   </data>
   <data name="Config" xml:space="preserve">
     <value>Configuration</value>
@@ -159,8 +159,8 @@
   <data name="NoGamesDetected.Text" xml:space="preserve">
     <value>No games detected, go to Configuration</value>
   </data>
-  <data name="OtherApps.Text" xml:space="preserve">
-    <value>Other Apps</value>
+  <data name="MoreApps.Text" xml:space="preserve">
+    <value>More Apps</value>
   </data>
   <data name="ReportBug.Text" xml:space="preserve">
     <value>Report a Bug</value>
@@ -170,9 +170,6 @@
   </data>
   <data name="SourceCode.Text" xml:space="preserve">
     <value>Source Code</value>
-  </data>
-  <data name="ThanksTo.Text" xml:space="preserve">
-    <value>Thanks to</value>
   </data>
   <data name="TileIcon.Text" xml:space="preserve">
     <value>Add icon</value>
@@ -201,7 +198,22 @@
   <data name="ConfigTwitchFolderMessage.Text" xml:space="preserve">
     <value>Add the folder C:\Users\[Your User]\AppData\Roaming\Twitch</value>
   </data>
-  <data name="ConfigOriginFolderMessage.Text" xml:space="preserve">
-    <value>Add the folder C:\ProgramData\Origin\LocalContent</value>
+  <data name="DescriptionStoreBlizzard" xml:space="preserve">
+    <value>Pin Tiles in the Start Menu of Windows 10 for your Blizzard games.</value>
+  </data>
+  <data name="DescriptionStoreGOG" xml:space="preserve">
+    <value>Pin Tiles in the Start Menu of Windows 10 for your GOG Galaxy games.</value>
+  </data>
+  <data name="DescriptionStoreOrigin" xml:space="preserve">
+    <value>Pin Tiles in the Start Menu of Windows 10 for your Origin games.</value>
+  </data>
+  <data name="DescriptionStoreSteam" xml:space="preserve">
+    <value>Pin Tiles in the Start Menu of Windows 10 for your Steam games.</value>
+  </data>
+  <data name="DescriptionStoreTwitch" xml:space="preserve">
+    <value>Pin Tiles in the Start Menu of Windows 10 for your Twitch Desktop App games.</value>
+  </data>
+  <data name="Updates.Text" xml:space="preserve">
+    <value>Updates</value>
   </data>
 </root>
