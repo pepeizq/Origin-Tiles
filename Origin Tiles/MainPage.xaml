@@ -43,7 +43,7 @@
 
                     <Grid x:Name="gridAñadirTiles" Grid.Row="0" Visibility="Collapsed" Padding="10,15" Margin="-10">
                         <Grid.Background>
-                            <SolidColorBrush Color="#fff4e6"/>
+                            <SolidColorBrush Color="{StaticResource ColorCuarto}"/>
                         </Grid.Background>
 
                         <Grid.ColumnDefinitions>
@@ -137,8 +137,9 @@
                 <Grid x:Name="gridConfig" Visibility="Collapsed">
                     <ScrollViewer>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Text="Tiles" Margin="10,5" FontSize="16"/>
-                            <Rectangle HorizontalAlignment="Left" Fill="Black" Height="1" Margin="5" Width="400"/>
+                            <Grid Width="500" HorizontalAlignment="Left" Margin="5,5,10,10" Padding="10" Background="{StaticResource GridTituloBackground}">
+                                <TextBlock Text="Tiles" FontSize="16" Foreground="White"/>
+                            </Grid>
 
                             <TextBlock x:Uid="ConfigOriginFolderMessage" Margin="10,5" TextWrapping="Wrap"/>
 
