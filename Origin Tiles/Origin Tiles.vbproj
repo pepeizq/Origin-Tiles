@@ -130,13 +130,12 @@
     <None Include="Origin Tiles_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\origin_logo.png" />
     <Content Include="Assets\MasCosas\contacto.png" />
     <Content Include="Assets\MasCosas\feedback.png" />
     <Content Include="Assets\MasCosas\github.png" />
     <Content Include="Assets\MasCosas\pepeizq.png" />
     <Content Include="Assets\MasCosas\poeditor.png" />
-    <Content Include="Assets\origin_logo.png" />
-    <Content Include="Assets\origin_logo2.png" />
     <Content Include="Assets\origin_logo_mini3.png" />
     <Content Include="Assets\origin_logo_mini2.png" />
     <Content Include="Assets\origin_logo_mini1.png" />
@@ -235,19 +234,19 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.4.0</Version>
+      <Version>6.0.5</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Services.Store.SDK">
       <Version>10.1705.16001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
-      <Version>2.0.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
-      <Version>2.0.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>2.0.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
