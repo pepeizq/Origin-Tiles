@@ -12,8 +12,13 @@ Module Tiles
 
         Dim ficheroImagen As StorageFile = Await ApplicationData.Current.LocalFolder.CreateFileAsync("header.png", CreationCollisionOption.GenerateUniqueName)
         Dim downloader As BackgroundDownloader = New BackgroundDownloader()
-        Dim descarga As DownloadOperation = downloader.CreateDownload(tile.Imagen, ficheroImagen)
-        Await descarga.StartAsync
+
+        Try
+            Dim descarga As DownloadOperation = downloader.CreateDownload(tile.Imagen, ficheroImagen)
+            Await descarga.StartAsync
+        Catch ex As Exception
+
+        End Try
 
         Dim nuevaTile As SecondaryTile = New SecondaryTile(tile.ID, tile.Titulo, tile.Enlace.ToString, New Uri("ms-appdata:///local/" + ficheroImagen.Name, UriKind.RelativeOrAbsolute), TileSize.Wide310x150)
 
