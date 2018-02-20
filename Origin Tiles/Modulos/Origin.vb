@@ -3,7 +3,11 @@ Imports Windows.Storage
 Imports Windows.Storage.AccessCache
 Imports Windows.Storage.Pickers
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
+
+'https://data1.origin.com/ocd/battlefield/battlefield-1/standard-edition.es-es.esp.ocd
+'https://urlscan.io/result/29449b3b-540f-4c5b-bde2-21f5405cfd1a/jsonview/
 
 Module Origin
 
@@ -62,7 +66,7 @@ Module Origin
 
                             titulo = titulo.Replace("Mirrors Edge", "Mirror's Edge")
 
-                            Dim ejecutable As String = Nothing
+                            Dim id As String = Nothing
 
                             If fichero.FileType = ".ddc" Then
                                 Dim ficheroDDC As StorageFile = fichero
@@ -83,7 +87,7 @@ Module Origin
                                         int2 = temp.IndexOf(ChrW(34))
                                         temp2 = temp.Remove(int2, temp.Length - int2)
 
-                                        ejecutable = "origin://launchgame/" + temp2
+                                        id = temp2.Trim
                                     End If
                                 End If
                             ElseIf fichero.FileType = ".mfst" Then
@@ -102,20 +106,20 @@ Module Origin
                                         int2 = temp.IndexOf("&")
                                         temp2 = temp.Remove(int2, temp.Length - int2)
 
-                                        ejecutable = "origin://launchgame/" + temp2
+                                        id = temp2
                                     End If
                                 End If
                             End If
 
-                            If ejecutable = Nothing Then
-                                ejecutable = "origin://launchgame/" + fichero.DisplayName
+                            If id = Nothing Then
+                                id = fichero.DisplayName
 
-                                If ejecutable.Contains("OFB-EAST") Then
-                                    ejecutable = ejecutable.Replace("OFB-EAST", "OFB-EAST:")
+                                If id.Contains("OFB-EAST") Then
+                                    id = id.Replace("OFB-EAST", "OFB-EAST:")
                                 End If
 
-                                If ejecutable.Contains("DR") Then
-                                    ejecutable = ejecutable.Replace("DR", "DR:")
+                                If id.Contains("DR") Then
+                                    id = id.Replace("DR", "DR:")
                                 End If
                             End If
 
@@ -129,7 +133,7 @@ Module Origin
                             End While
 
                             If tituloBool = False Then
-                                Dim juego As New Tile(titulo, Nothing, New Uri(ejecutable), Nothing, "Origin", Nothing)
+                                Dim juego As New Tile(titulo, id.Replace(".", Nothing), New Uri("origin://launchgame/" + id), Nothing, Nothing, Nothing, Nothing)
                                 listaJuegos.Add(juego)
                             End If
                         End If
@@ -162,11 +166,11 @@ Module Origin
 
                 Dim wb As New WebView(WebViewExecutionMode.SeparateThread) With {
                     .Tag = juego
-                    }
+                }
 
                 AddHandler wb.NavigationCompleted, AddressOf Wb_NavigationCompleted
 
-                wb.Navigate(New Uri("https://www.google.com/search?q=" + textoTitulo + "%20originassets.akamaized.net&biw=1280&bih=886&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjw8KHftrrRAhUN8GMKHdzFBQMQ_AUICCgB&gws_rd=cr,ssl&ei=H1J2WLa_FIPcjwSRvLSQCg"))
+                wb.Navigate(New Uri("https://www.google.com/search?q=" + textoTitulo + "%20originassets.akamaized.net&source=lnms&tbm=isch&sa=X"))
 
                 Await Task.Delay(5000)
             Next
@@ -250,17 +254,7 @@ Module Origin
                             End If
 
                             If boolImagen = True Then
-                                Dim codigo As ApplicationDataContainer = ApplicationData.Current.LocalSettings
-
-                                If codigo.Values("codigoOrigin") Is Nothing Then
-                                    codigo.Values("codigoOrigin") = "0"
-                                End If
-
-                                Dim numCodigo As String = Integer.Parse(codigo.Values("codigoOrigin")) + 1
-                                codigo.Values("codigoOrigin") = numCodigo
-
-                                juego.ID = numCodigo
-                                juego.Imagen = New Uri(imagenUrl)
+                                juego.ImagenGrande = New Uri(imagenUrl)
 
                                 Dim gv As GridView = pagina.FindName("gridViewTilesOrigin")
 
@@ -269,7 +263,7 @@ Module Origin
                                 Dim imagen As New ImageEx
 
                                 Try
-                                    imagen.Source = New BitmapImage(juego.Imagen)
+                                    imagen.Source = New BitmapImage(juego.ImagenGrande)
                                 Catch ex As Exception
 
                                 End Try
@@ -294,6 +288,8 @@ Module Origin
                                 ToolTipService.SetPlacement(boton, PlacementMode.Mouse)
 
                                 AddHandler boton.Click, AddressOf BotonTile_Click
+                                AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
+                                AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
 
                                 gv.Items.Add(boton)
                                 Exit While
@@ -312,62 +308,76 @@ Module Origin
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
-
-        Dim gv As GridView = pagina.FindName("gridViewTilesOrigin")
-
         Dim botonJuego As Button = e.OriginalSource
+        Dim juego As Tile = botonJuego.Tag
 
-        Dim borde As Thickness = New Thickness(6, 6, 6, 6)
-        If botonJuego.BorderThickness = borde Then
-            botonJuego.BorderThickness = New Thickness(1, 1, 1, 1)
-            botonJuego.BorderBrush = New SolidColorBrush(Colors.Black)
+        Dim botonAñadirTile As Button = pagina.FindName("botonAñadirTile")
+        botonAñadirTile.Tag = juego
 
-            Dim gridAñadir As Grid = pagina.FindName("gridAñadirTiles")
-            gridAñadir.Visibility = Visibility.Collapsed
+        Dim imagenJuegoSeleccionado As ImageEx = pagina.FindName("imagenJuegoSeleccionado")
+        imagenJuegoSeleccionado.Source = New BitmapImage(juego.ImagenGrande)
 
-            Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
-            gridSeleccionar.Visibility = Visibility.Visible
+        Dim tbJuegoSeleccionado As TextBlock = pagina.FindName("tbJuegoSeleccionado")
+        tbJuegoSeleccionado.Text = juego.Titulo
 
-            Dim recursos As New Resources.ResourceLoader()
-            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + recursos.GetString("Tiles")
-        Else
-            For Each item In gv.Items
-                Dim itemBoton As Button = item
-                itemBoton.BorderThickness = New Thickness(1, 1, 1, 1)
-                itemBoton.BorderBrush = New SolidColorBrush(Colors.Black)
-            Next
+        Dim gridAñadir As Grid = pagina.FindName("gridAñadirTile")
+        gridAñadir.Visibility = Visibility.Visible
 
-            botonJuego.BorderThickness = New Thickness(6, 6, 6, 6)
-            botonJuego.BorderBrush = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("tile", botonJuego)
 
-            Dim botonAñadirTile As Button = pagina.FindName("botonAñadirTile")
-            Dim juego As Tile = botonJuego.Tag
-            botonAñadirTile.Tag = juego
+        Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("tile")
 
-            Dim imageJuegoSeleccionado As ImageEx = pagina.FindName("imageJuegoSeleccionado")
-            Dim imagenCapsula As String = juego.Imagen.ToString
-            imageJuegoSeleccionado.Source = New BitmapImage(New Uri(imagenCapsula))
-
-            Dim tbJuegoSeleccionado As TextBlock = pagina.FindName("tbJuegoSeleccionado")
-            tbJuegoSeleccionado.Text = juego.Titulo
-
-            Dim gridAñadir As Grid = pagina.FindName("gridAñadirTiles")
-            gridAñadir.Visibility = Visibility.Visible
-
-            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("tile", botonJuego)
-
-            Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("tile")
-
-            If Not animacion Is Nothing Then
-                animacion.TryStart(gridAñadir)
-            End If
-
-            Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
-            gridSeleccionar.Visibility = Visibility.Collapsed
-
-            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + juego.Titulo
+        If Not animacion Is Nothing Then
+            animacion.TryStart(gridAñadir)
         End If
+
+        Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
+        tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + juego.Titulo
+
+        '---------------------------------------------
+
+        Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
+        imagenPequeña.Visibility = Visibility.Collapsed
+
+        Dim tbPequeña As TextBlock = pagina.FindName("tbTilePequeña")
+        tbPequeña.Visibility = Visibility.Visible
+
+        '---------------------------------------------
+
+        Dim imagenMediana As ImageEx = pagina.FindName("imagenTileMediana")
+        imagenMediana.Visibility = Visibility.Collapsed
+
+        Dim tbMediana As TextBlock = pagina.FindName("tbTileMediana")
+        tbMediana.Visibility = Visibility.Visible
+
+        '---------------------------------------------
+
+        Dim imagenAncha As ImageEx = pagina.FindName("imagenTileAncha")
+        imagenAncha.Visibility = Visibility.Collapsed
+
+        Dim tbAncha As TextBlock = pagina.FindName("tbTileAncha")
+        tbAncha.Visibility = Visibility.Visible
+
+        '---------------------------------------------
+
+        Dim imagenGrande As ImageEx = pagina.FindName("imagenTileGrande")
+        imagenGrande.Source = juego.ImagenGrande
+        imagenGrande.Visibility = Visibility.Visible
+
+        Dim tbGrande As TextBlock = pagina.FindName("tbTileGrande")
+        tbGrande.Visibility = Visibility.Collapsed
+
+    End Sub
+
+    Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+    End Sub
+
+    Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
     End Sub
 
