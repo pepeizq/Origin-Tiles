@@ -214,7 +214,7 @@
     <value>Updates</value>
   </data>
   <data name="ConfigOriginFolderMessage.Text" xml:space="preserve">
-    <value>Add the folder C: \ ProgramData \ Origin \ LocalContent (it can be hidden)</value>
+    <value>Add the folder C:\ProgramData\Origin\LocalContent (it can be hidden)</value>
   </data>
   <data name="GameSelectedTiles.Text" xml:space="preserve">
     <value>Images to include in the Tile of this game:</value>
