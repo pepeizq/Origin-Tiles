@@ -26,7 +26,7 @@ Module Tiles
 
         Dim imagenDRM As AdaptiveImage = Nothing
 
-        If ApplicationData.Current.LocalSettings.Values("logotile") = "on" Then
+        If ApplicationData.Current.LocalSettings.Values("drm_tile") = "on" Then
             imagenDRM = New AdaptiveImage With {
                 .HintRemoveMargin = True,
                 .HintAlign = AdaptiveImageAlign.Right
@@ -145,7 +145,7 @@ Module Tiles
 
         '-----------------------
 
-        If ApplicationData.Current.LocalSettings.Values("titulotile") = "on" Then
+        If ApplicationData.Current.LocalSettings.Values("titulo_tile") = "on" Then
             tileAncha.Branding = TileBranding.Name
             tilePequeño.Branding = TileBranding.Name
             tileMediano.Branding = TileBranding.Name
