@@ -15,7 +15,7 @@ Module Tiles
         Dim boton As Button = pagina.FindName("botonAñadirTile")
         boton.IsEnabled = False
 
-        Dim nuevaTile As New SecondaryTile(tile.ID, tile.Titulo, tile.Enlace.ToString, New Uri("ms-appdata:///local/" + tile.ID + "ancha.png", UriKind.RelativeOrAbsolute), TileSize.Wide310x150)
+        Dim nuevaTile As New SecondaryTile(tile.ID, tile.Titulo, tile.Enlace.ToString, New Uri("ms-appdata:///local/" + tile.ID + "grande.png", UriKind.RelativeOrAbsolute), TileSize.Default)
 
         nuevaTile.VisualElements.Wide310x150Logo = New Uri("ms-appdata:///local/" + tile.ID + "ancha.png", UriKind.RelativeOrAbsolute)
         nuevaTile.VisualElements.Square310x310Logo = New Uri("ms-appdata:///local/" + tile.ID + "grande.png", UriKind.RelativeOrAbsolute)
@@ -26,7 +26,7 @@ Module Tiles
 
         Dim imagenDRM As AdaptiveImage = Nothing
 
-        If ApplicationData.Current.LocalSettings.Values("drm_tile") = "on" Then
+        If ApplicationData.Current.LocalSettings.Values("drm_tile") = True Then
             imagenDRM = New AdaptiveImage With {
                 .HintRemoveMargin = True,
                 .HintAlign = AdaptiveImageAlign.Right
@@ -145,7 +145,7 @@ Module Tiles
 
         '-----------------------
 
-        If ApplicationData.Current.LocalSettings.Values("titulo_tile") = "on" Then
+        If ApplicationData.Current.LocalSettings.Values("titulo_tile") = True Then
             tileAncha.Branding = TileBranding.Name
             tilePequeño.Branding = TileBranding.Name
             tileMediano.Branding = TileBranding.Name

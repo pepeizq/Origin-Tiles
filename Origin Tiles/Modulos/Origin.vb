@@ -13,7 +13,7 @@ Module Origin
 
     Public Async Sub Generar(boolBuscarCarpeta As Boolean)
 
-        Dim recursos As Resources.ResourceLoader = New Resources.ResourceLoader()
+        Dim recursos As New Resources.ResourceLoader()
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -32,7 +32,7 @@ Module Origin
 
         Try
             If boolBuscarCarpeta = True Then
-                Dim carpetapicker As FolderPicker = New FolderPicker()
+                Dim carpetapicker As New FolderPicker()
 
                 carpetapicker.FileTypeFilter.Add("*")
                 carpetapicker.ViewMode = PickerViewMode.List

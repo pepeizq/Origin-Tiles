@@ -226,7 +226,7 @@
                                 </Grid>
 
                                 <StackPanel Orientation="Vertical" Padding="15">
-                                    <TextBlock x:Uid="ConfigOriginFolderMessage" Margin="0,0,0,10" TextWrapping="Wrap"/>
+                                    <TextBlock x:Uid="ConfigFolderMessage" Margin="0,0,0,10" TextWrapping="Wrap"/>
 
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -237,13 +237,25 @@
                                         <Button x:Name="botonAñadirCarpetaOrigin" Grid.Column="0" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                             <StackPanel Orientation="Horizontal" >
                                                 <SymbolIcon Symbol="NewFolder" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                                <TextBlock x:Name="botonAñadirCarpetaOriginTexto" x:Uid="ConfigSteamAddFolder" Foreground="White"/>
+                                                <TextBlock x:Name="botonAñadirCarpetaOriginTexto" x:Uid="ConfigAddFolder" Foreground="White"/>
                                             </StackPanel>
                                         </Button>
 
                                         <TextBlock x:Name="tbOriginConfigCarpeta" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                     </Grid>
-                                </StackPanel> 
+                                </StackPanel>
+
+                                <Grid Padding="15" Background="IndianRed">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <SymbolIcon Grid.Column="0" Symbol="Important" VerticalAlignment="Center" Foreground="White"/>
+                                    <TextBlock x:Uid="ConfigFolderWarning" Grid.Column="1" Margin="10,0" TextWrapping="Wrap" Foreground="White"/>
+                                    <Button x:Name="botonComoAñadirCarpeta" Grid.Column="2" x:Uid="ConfigFolderHowAdd" Foreground="White" Padding="5" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
+                                </Grid>
                             </StackPanel> 
                         </StackPanel> 
                     </ScrollViewer> 

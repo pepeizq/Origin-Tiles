@@ -2,6 +2,7 @@
 Imports Windows.Storage
 Imports Windows.Storage.Pickers
 Imports Windows.Storage.Streams
+Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Core
 
@@ -185,6 +186,12 @@ Public NotInheritable Class MainPage
     Private Sub BotonAñadirCarpetaOrigin_Click(sender As Object, e As RoutedEventArgs) Handles botonAñadirCarpetaOrigin.Click
 
         Origin.Generar(True)
+
+    End Sub
+
+    Private Async Sub BotonComoAñadirCarpeta_Click(sender As Object, e As RoutedEventArgs) Handles botonComoAñadirCarpeta.Click
+
+        Await Launcher.LaunchUriAsync(New Uri("https://support.microsoft.com/en-us/help/14201/windows-show-hidden-files"))
 
     End Sub
 
