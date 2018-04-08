@@ -60,7 +60,7 @@
                             </TransitionCollection>
                         </Grid.ChildrenTransitions>
 
-                        <Grid Padding="10" Background="IndianRed" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,0,0">
+                        <Grid Padding="10" Background="IndianRed" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,0,0">
                             <TextBlock x:Uid="SelectGame" TextWrapping="Wrap" Foreground="White"/>
                         </Grid>
                     </Grid>
@@ -230,8 +230,8 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Button x:Name="botonAñadirCarpetaOrigin" Grid.Column="0" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                            <StackPanel Orientation="Horizontal" >
-                                                <SymbolIcon Symbol="NewFolder" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:FontAwesome Icon="Folder" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
                                                 <TextBlock x:Name="botonAñadirCarpetaOriginTexto" x:Uid="ConfigAddFolder" Foreground="White"/>
                                             </StackPanel>
                                         </Button>
@@ -247,9 +247,9 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <SymbolIcon Grid.Column="0" Symbol="Important" VerticalAlignment="Center" Foreground="White"/>
+                                    <fa:FontAwesome Grid.Column="0" Icon="Exclamation" Margin="5,0" VerticalAlignment="Center" Foreground="White"/>
                                     <TextBlock x:Uid="ConfigFolderWarning" Grid.Column="1" Margin="10,0" TextWrapping="Wrap" Foreground="White"/>
-                                    <Button x:Name="botonComoAñadirCarpeta" Grid.Column="2" x:Uid="ConfigFolderHowAdd" Foreground="White" Padding="5" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
+                                    <Button x:Name="botonComoAñadirCarpeta" Grid.Column="2" x:Uid="ConfigFolderHowAdd" Foreground="White" Padding="8" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
                                 </Grid>
                             </StackPanel> 
                         </StackPanel> 

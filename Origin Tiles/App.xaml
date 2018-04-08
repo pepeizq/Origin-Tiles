@@ -5,6 +5,10 @@
     RequestedTheme="Light">
 
     <Application.Resources>
+        <Style x:Key="GridViewEstilo1" TargetType="GridViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
         <Style x:Key="EllipsisButton" TargetType="Button">
             <Setter Property="MaxWidth" Value="0"/>
         </Style>

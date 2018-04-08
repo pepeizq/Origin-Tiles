@@ -198,8 +198,6 @@ Module Origin
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim gvTiles As GridView = pagina.FindName("gridViewTilesOrigin")
-
         Dim lista As New List(Of String) From {
             "document.documentElement.outerHTML;"
         }
