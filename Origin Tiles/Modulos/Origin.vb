@@ -338,7 +338,7 @@ Module Origin
         Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
         imagenPequeña.Visibility = Visibility.Collapsed
 
-        Dim tbPequeña As TextBlock = pagina.FindName("tbTilePequeña")
+        Dim tbPequeña As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTilePequeña")
         tbPequeña.Visibility = Visibility.Visible
 
         '---------------------------------------------
@@ -346,7 +346,7 @@ Module Origin
         Dim imagenMediana As ImageEx = pagina.FindName("imagenTileMediana")
         imagenMediana.Visibility = Visibility.Collapsed
 
-        Dim tbMediana As TextBlock = pagina.FindName("tbTileMediana")
+        Dim tbMediana As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTileMediana")
         tbMediana.Visibility = Visibility.Visible
 
         '---------------------------------------------
@@ -354,7 +354,7 @@ Module Origin
         Dim imagenAncha As ImageEx = pagina.FindName("imagenTileAncha")
         imagenAncha.Visibility = Visibility.Collapsed
 
-        Dim tbAncha As TextBlock = pagina.FindName("tbTileAncha")
+        Dim tbAncha As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTileAncha")
         tbAncha.Visibility = Visibility.Visible
 
         '---------------------------------------------
@@ -363,7 +363,7 @@ Module Origin
         imagenGrande.Source = juego.ImagenGrande
         imagenGrande.Visibility = Visibility.Visible
 
-        Dim tbGrande As TextBlock = pagina.FindName("tbTileGrande")
+        Dim tbGrande As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTileGrande")
         tbGrande.Visibility = Visibility.Collapsed
 
     End Sub
