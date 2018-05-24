@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Toolkit.Uwp.UI.Animations
+﻿Imports System.Text.RegularExpressions
+Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Windows.Storage
 Imports Windows.Storage.AccessCache
@@ -7,8 +8,11 @@ Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
 
+'https://api1.origin.com/supercarp/rating/offers/anonymous?country=ES&locale=es_ES&pid=&currency=EUR&offerIds=Origin.OFR.50.0002325
 'https://data1.origin.com/ocd/battlefield/battlefield-1/standard-edition.es-es.esp.ocd
 'https://urlscan.io/result/29449b3b-540f-4c5b-bde2-21f5405cfd1a/jsonview/
+'https://pastebin.com/HvN2g7Qi
+'https://api2.origin.com/ecommerce2/public/supercat/Origin.OFR.50.0002190/en_US?country=US
 
 Module Origin
 
@@ -63,10 +67,6 @@ Module Origin
                         Dim ficheroext As String = fichero.DisplayName + fichero.FileType
 
                         If Not ficheroext = "map.crc" Then
-                            Dim titulo As String = carpetaJuego.Name
-
-                            titulo = titulo.Replace("Mirrors Edge", "Mirror's Edge")
-
                             Dim id As String = Nothing
 
                             If fichero.FileType = ".ddc" Then
@@ -124,18 +124,125 @@ Module Origin
                                 End If
                             End If
 
-                            Dim tituloBool As Boolean = False
-                            Dim i As Integer = 0
-                            While i < listaJuegos.Count
-                                If listaJuegos(i).Titulo = titulo Then
-                                    tituloBool = True
-                                End If
-                                i += 1
-                            End While
+                            If Not id = Nothing Then
+                                Dim html As String = Await Decompiladores.HttpClient(New Uri("https://api2.origin.com/ecommerce2/public/supercat/" + id + "/en_US?country=US"))
 
-                            If tituloBool = False Then
-                                Dim juego As New Tile(titulo, id.Replace(".", Nothing), New Uri("origin://launchgame/" + id), Nothing, Nothing, Nothing, Nothing)
-                                listaJuegos.Add(juego)
+                                If Not html = Nothing Then
+                                    Dim titulo As String = Nothing
+
+                                    If html.Contains(ChrW(34) + "displayName" + ChrW(34)) Then
+                                        Dim temp, temp2 As String
+                                        Dim int, int2 As Integer
+
+                                        int = html.IndexOf(ChrW(34) + "displayName" + ChrW(34))
+                                        temp = html.Remove(0, int + 1)
+
+                                        int = temp.IndexOf(":")
+                                        temp = temp.Remove(0, int + 2)
+
+                                        int2 = temp.IndexOf(ChrW(34))
+                                        temp2 = temp.Remove(int2, temp.Length - int2)
+
+                                        temp2 = Regex.Replace(temp2, "[^\u0000-\u007F]", String.Empty)
+
+                                        titulo = temp2.Trim
+                                    End If
+
+                                    Dim imagenAlta As String = Nothing
+
+                                    If html.Contains(ChrW(34) + "imageServer" + ChrW(34)) Then
+                                        Dim temp, temp2 As String
+                                        Dim int, int2 As Integer
+
+                                        int = html.IndexOf(ChrW(34) + "imageServer" + ChrW(34))
+                                        temp = html.Remove(0, int + 1)
+
+                                        int = temp.IndexOf(":")
+                                        temp = temp.Remove(0, int + 2)
+
+                                        int2 = temp.IndexOf(ChrW(34))
+                                        temp2 = temp.Remove(int2, temp.Length - int2)
+
+                                        If html.Contains(ChrW(34) + "packArtLarge" + ChrW(34)) Then
+                                            Dim temp3, temp4 As String
+                                            Dim int3, int4 As Integer
+
+                                            int3 = html.IndexOf(ChrW(34) + "packArtLarge" + ChrW(34))
+                                            temp3 = html.Remove(0, int3 + 1)
+
+                                            int3 = temp3.IndexOf(":")
+                                            temp3 = temp3.Remove(0, int3 + 2)
+
+                                            int4 = temp3.IndexOf(ChrW(34))
+                                            temp4 = temp3.Remove(int4, temp3.Length - int4)
+
+                                            imagenAlta = temp2.Trim + temp4.Trim
+                                        End If
+                                    End If
+
+                                    Dim imagenAncha As String = Nothing
+
+                                    If html.Contains(ChrW(34) + "path" + ChrW(34)) Then
+                                        Dim temp, temp2 As String
+                                        Dim int, int2 As Integer
+
+                                        int = html.IndexOf(ChrW(34) + "path" + ChrW(34))
+                                        temp = html.Remove(0, int + 1)
+
+                                        int = temp.IndexOf(":")
+                                        temp = temp.Remove(0, int + 2)
+
+                                        int2 = temp.IndexOf(ChrW(34))
+                                        temp2 = temp.Remove(int2, temp.Length - int2)
+
+                                        Dim html2 As String = Await Decompiladores.HttpClient(New Uri("https://data1.origin.com/ocd/" + temp2.Trim + ".en-us.esp.ocd"))
+
+                                        If Not html2 = Nothing Then
+                                            If html2.Contains(ChrW(34) + "download-background-image" + ChrW(34)) Then
+                                                Dim temp3, temp4 As String
+                                                Dim int3, int4 As Integer
+
+                                                int3 = html2.IndexOf(ChrW(34) + "download-background-image" + ChrW(34))
+                                                temp3 = html2.Remove(0, int3 + 1)
+
+                                                int3 = temp3.IndexOf(":")
+                                                temp3 = temp3.Remove(0, int3 + 2)
+
+                                                int4 = temp3.IndexOf(ChrW(34))
+                                                temp4 = temp3.Remove(int4, temp3.Length - int4)
+
+                                                imagenAncha = temp4.Trim
+                                            End If
+                                        End If
+                                    End If
+
+                                    If imagenAncha = Nothing Then
+                                        imagenAncha = imagenAlta
+                                    End If
+
+                                    Dim tituloBool As Boolean = False
+                                    Dim i As Integer = 0
+                                    While i < listaJuegos.Count
+                                        If listaJuegos(i).Titulo = titulo Then
+                                            tituloBool = True
+                                        End If
+
+                                        If html.Contains(ChrW(34) + "originDisplayType" + ChrW(34) + ":" + ChrW(34) + "Addon") Then
+                                            tituloBool = True
+                                        End If
+                                        i += 1
+                                    End While
+
+                                    If tituloBool = False Then
+                                        Dim id2 As String = id
+                                        id2 = id2.Replace(".", Nothing)
+                                        id2 = id2.Replace(":", Nothing)
+                                        id2 = id2.Replace("%", Nothing)
+
+                                        Dim juego As New Tile(titulo, id2, New Uri("origin://launchgame/" + id), Nothing, New Uri(imagenAlta), New Uri(imagenAncha), New Uri(imagenAlta))
+                                        listaJuegos.Add(juego)
+                                    End If
+                                End If
                             End If
                         End If
                     Next
@@ -143,7 +250,7 @@ Module Origin
             End If
         End If
 
-        Dim panelAvisoNoJuegos As DropShadowPanel = pagina.FindName("panelAvisoNoJuegos")
+        Dim panelAvisoNoJuegos As Grid = pagina.FindName("panelAvisoNoJuegos")
         Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
 
         If listaJuegos.Count > 0 Then
@@ -162,18 +269,40 @@ Module Origin
             listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
             For Each juego In listaJuegos
-                Dim textoTitulo As String = juego.Titulo
-                textoTitulo = textoTitulo.Replace(" ", "%20")
+                Dim boton As New Button
 
-                Dim wb As New WebView(WebViewExecutionMode.SeparateThread) With {
-                    .Tag = juego
+                Dim imagen As New ImageEx
+
+                Try
+                    imagen.Source = New BitmapImage(juego.ImagenGrande)
+                Catch ex As Exception
+
+                End Try
+
+                imagen.IsCacheEnabled = True
+                imagen.Stretch = Stretch.UniformToFill
+                imagen.Padding = New Thickness(0, 0, 0, 0)
+
+                boton.Tag = juego
+                boton.Content = imagen
+                boton.Padding = New Thickness(0, 0, 0, 0)
+                boton.BorderThickness = New Thickness(1, 1, 1, 1)
+                boton.BorderBrush = New SolidColorBrush(Colors.Black)
+                boton.Background = New SolidColorBrush(Colors.Transparent)
+
+                Dim tbToolTip As TextBlock = New TextBlock With {
+                    .Text = juego.Titulo,
+                    .FontSize = 16
                 }
 
-                AddHandler wb.NavigationCompleted, AddressOf Wb_NavigationCompleted
+                ToolTipService.SetToolTip(boton, tbToolTip)
+                ToolTipService.SetPlacement(boton, PlacementMode.Mouse)
 
-                wb.Navigate(New Uri("https://www.google.com/search?q=" + textoTitulo + "%20originassets.akamaized.net&source=lnms&tbm=isch&sa=X"))
+                AddHandler boton.Click, AddressOf BotonTile_Click
+                AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
+                AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
 
-                Await Task.Delay(5000)
+                gv.Items.Add(boton)
             Next
 
             If boolBuscarCarpeta = True Then
@@ -188,117 +317,6 @@ Module Origin
 
         botonAñadir.IsEnabled = True
         pr.Visibility = Visibility.Collapsed
-
-    End Sub
-
-    Private Async Sub Wb_NavigationCompleted(sender As WebView, e As WebViewNavigationCompletedEventArgs)
-
-        Dim juego As Tile = sender.Tag
-
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
-        Dim lista As New List(Of String) From {
-            "document.documentElement.outerHTML;"
-        }
-
-        Dim argumentos As IEnumerable(Of String) = lista
-        Dim html As String = Nothing
-
-        Try
-            html = Await sender.InvokeScriptAsync("eval", argumentos)
-        Catch ex As Exception
-
-        End Try
-
-        Dim tope As Integer = 20
-
-        If Not html = Nothing Then
-            Dim i As Integer = 0
-            While i < tope
-                If html.Contains("<div class=" + ChrW(34) + "rg_meta") Then
-                    Dim temp, temp2, temp3, temp4 As String
-                    Dim int, int2, int3, int4 As Integer
-
-                    int = html.IndexOf("<div class=" + ChrW(34) + "rg_meta")
-                    temp = html.Remove(0, int + 5)
-
-                    html = temp
-
-                    int2 = temp.IndexOf("</div>")
-                    temp2 = temp.Remove(int2, temp.Length - int2)
-
-                    If temp2.Contains(ChrW(34) + "ou" + ChrW(34)) Then
-                        int3 = temp2.IndexOf(ChrW(34) + "ou" + ChrW(34))
-                        temp3 = temp2.Remove(0, int3 + 6)
-
-                        int4 = temp3.IndexOf(ChrW(34))
-                        temp4 = temp3.Remove(int4, temp3.Length - int4)
-
-                        Dim imagenUrl As String = temp4.Trim
-
-                        If Not imagenUrl = Nothing Then
-                            Dim boolImagen As Boolean = False
-
-                            If imagenUrl.Contains("originassets.akamaized.net") Then
-                                boolImagen = True
-                            End If
-
-                            Dim tempTitulo As String = juego.Titulo
-                            tempTitulo = tempTitulo.Replace(" ", "-")
-                            tempTitulo = tempTitulo.ToLower
-
-                            If Not temp2.Contains("/" + tempTitulo + "/") Then
-                                boolImagen = False
-                            End If
-
-                            If boolImagen = True Then
-                                juego.ImagenGrande = New Uri(imagenUrl)
-
-                                Dim gv As GridView = pagina.FindName("gridViewTilesOrigin")
-
-                                Dim boton As New Button
-
-                                Dim imagen As New ImageEx
-
-                                Try
-                                    imagen.Source = New BitmapImage(juego.ImagenGrande)
-                                Catch ex As Exception
-
-                                End Try
-
-                                imagen.IsCacheEnabled = True
-                                imagen.Stretch = Stretch.Uniform
-                                imagen.Padding = New Thickness(0, 0, 0, 0)
-
-                                boton.Tag = juego
-                                boton.Content = imagen
-                                boton.Padding = New Thickness(0, 0, 0, 0)
-                                boton.BorderThickness = New Thickness(1, 1, 1, 1)
-                                boton.BorderBrush = New SolidColorBrush(Colors.Black)
-                                boton.Background = New SolidColorBrush(Colors.Transparent)
-
-                                Dim tbToolTip As TextBlock = New TextBlock With {
-                                    .Text = juego.Titulo,
-                                    .FontSize = 16
-                                }
-
-                                ToolTipService.SetToolTip(boton, tbToolTip)
-                                ToolTipService.SetPlacement(boton, PlacementMode.Mouse)
-
-                                AddHandler boton.Click, AddressOf BotonTile_Click
-                                AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
-                                AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
-
-                                gv.Items.Add(boton)
-                                Exit While
-                            End If
-                        End If
-                    End If
-                End If
-                i += 1
-            End While
-        End If
 
     End Sub
 
@@ -335,36 +353,77 @@ Module Origin
 
         '---------------------------------------------
 
-        Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
-        imagenPequeña.Visibility = Visibility.Collapsed
+        Dim titulo1 As TextBlock = pagina.FindName("tituloTileAnchaEnseñar")
+        Dim titulo2 As TextBlock = pagina.FindName("tituloTileAnchaPersonalizar")
 
-        Dim tbPequeña As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTilePequeña")
-        tbPequeña.Visibility = Visibility.Visible
+        Dim titulo3 As TextBlock = pagina.FindName("tituloTileGrandeEnseñar")
+        Dim titulo4 As TextBlock = pagina.FindName("tituloTileGrandePersonalizar")
 
-        '---------------------------------------------
+        titulo1.Text = juego.Titulo
+        titulo2.Text = juego.Titulo
 
-        Dim imagenMediana As ImageEx = pagina.FindName("imagenTileMediana")
-        imagenMediana.Visibility = Visibility.Collapsed
+        titulo3.Text = juego.Titulo
+        titulo4.Text = juego.Titulo
 
-        Dim tbMediana As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTileMediana")
-        tbMediana.Visibility = Visibility.Visible
+        If juego.ImagenPequeña = Nothing Then
+            juego.ImagenPequeña = New Uri("ms-appx:///Assets/Logos/AppList.scale-100.png")
+        End If
 
-        '---------------------------------------------
+        If Not juego.ImagenPequeña = Nothing Then
+            Dim imagenPequeña1 As ImageEx = pagina.FindName("imagenTilePequeñaEnseñar")
+            Dim imagenPequeña2 As ImageEx = pagina.FindName("imagenTilePequeñaGenerar")
+            Dim imagenPequeña3 As ImageEx = pagina.FindName("imagenTilePequeñaPersonalizar")
 
-        Dim imagenAncha As ImageEx = pagina.FindName("imagenTileAncha")
-        imagenAncha.Visibility = Visibility.Collapsed
+            imagenPequeña1.Source = juego.ImagenPequeña
+            imagenPequeña2.Source = juego.ImagenPequeña
+            imagenPequeña3.Source = juego.ImagenPequeña
 
-        Dim tbAncha As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTileAncha")
-        tbAncha.Visibility = Visibility.Visible
+            imagenPequeña1.Tag = juego.ImagenPequeña
+            imagenPequeña2.Tag = juego.ImagenPequeña
+            imagenPequeña3.Tag = juego.ImagenPequeña
+        End If
 
-        '---------------------------------------------
+        If Not juego.ImagenMediana = Nothing Then
+            Dim imagenMediana1 As ImageEx = pagina.FindName("imagenTileMedianaEnseñar")
+            Dim imagenMediana2 As ImageEx = pagina.FindName("imagenTileMedianaGenerar")
+            Dim imagenMediana3 As ImageEx = pagina.FindName("imagenTileMedianaPersonalizar")
 
-        Dim imagenGrande As ImageEx = pagina.FindName("imagenTileGrande")
-        imagenGrande.Source = juego.ImagenGrande
-        imagenGrande.Visibility = Visibility.Visible
+            imagenMediana1.Source = juego.ImagenMediana
+            imagenMediana2.Source = juego.ImagenMediana
+            imagenMediana3.Source = juego.ImagenMediana
 
-        Dim tbGrande As FontAwesome.UWP.FontAwesome = pagina.FindName("tbTileGrande")
-        tbGrande.Visibility = Visibility.Collapsed
+            imagenMediana1.Tag = juego.ImagenMediana
+            imagenMediana2.Tag = juego.ImagenMediana
+            imagenMediana3.Tag = juego.ImagenMediana
+        End If
+
+        If Not juego.ImagenAncha = Nothing Then
+            Dim imagenAncha1 As ImageEx = pagina.FindName("imagenTileAnchaEnseñar")
+            Dim imagenAncha2 As ImageEx = pagina.FindName("imagenTileAnchaGenerar")
+            Dim imagenAncha3 As ImageEx = pagina.FindName("imagenTileAnchaPersonalizar")
+
+            imagenAncha1.Source = juego.ImagenAncha
+            imagenAncha2.Source = juego.ImagenAncha
+            imagenAncha3.Source = juego.ImagenAncha
+
+            imagenAncha1.Tag = juego.ImagenAncha
+            imagenAncha2.Tag = juego.ImagenAncha
+            imagenAncha3.Tag = juego.ImagenAncha
+        End If
+
+        If Not juego.ImagenGrande = Nothing Then
+            Dim imagenGrande1 As ImageEx = pagina.FindName("imagenTileGrandeEnseñar")
+            Dim imagenGrande2 As ImageEx = pagina.FindName("imagenTileGrandeGenerar")
+            Dim imagenGrande3 As ImageEx = pagina.FindName("imagenTileGrandePersonalizar")
+
+            imagenGrande1.Source = juego.ImagenGrande
+            imagenGrande2.Source = juego.ImagenGrande
+            imagenGrande3.Source = juego.ImagenGrande
+
+            imagenGrande1.Tag = juego.ImagenGrande
+            imagenGrande2.Tag = juego.ImagenGrande
+            imagenGrande3.Tag = juego.ImagenGrande
+        End If
 
     End Sub
 
