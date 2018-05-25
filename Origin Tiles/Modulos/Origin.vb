@@ -239,7 +239,7 @@ Module Origin
                                         id2 = id2.Replace(":", Nothing)
                                         id2 = id2.Replace("%", Nothing)
 
-                                        Dim juego As New Tile(titulo, id2, New Uri("origin://launchgame/" + id), Nothing, New Uri(imagenAlta), New Uri(imagenAncha), New Uri(imagenAlta))
+                                        Dim juego As New Tile(titulo, id2, "origin://launchgame/" + id, Nothing, New Uri(imagenAlta), New Uri(imagenAncha), New Uri(imagenAlta))
                                         listaJuegos.Add(juego)
                                     End If
                                 End If
