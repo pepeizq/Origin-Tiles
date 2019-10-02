@@ -102,7 +102,7 @@ Module Configuracion
         '------------------------------------------
 
         If ApplicationData.Current.LocalSettings.Values("tiles_color_fondo") Is Nothing Then
-            TilesColorFondo(Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHex(App.Current.Resources("ColorSecundario")))
+            TilesColorFondo(Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHex(App.Current.Resources("ColorPrimario")))
         Else
             TilesColorFondo(ApplicationData.Current.LocalSettings.Values("tiles_color_fondo"))
         End If
@@ -236,7 +236,7 @@ Module Configuracion
         TilesDRMIcono(0)
         TilesDRMIconoPosicion(1)
 
-        TilesColorFondo(Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHex(App.Current.Resources("ColorSecundario")))
+        TilesColorFondo(Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToHex(App.Current.Resources("ColorPrimario")))
 
         Dim imagen1 As ImageEx = pagina.FindName("imagenTilePequeñaGenerar")
         Dim imagen2 As ImageEx = pagina.FindName("imagenTilePequeñaEnseñar")
