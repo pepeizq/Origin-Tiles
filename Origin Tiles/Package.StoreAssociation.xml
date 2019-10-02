@@ -2,6 +2,7 @@
 <StoreAssociation xmlns="http://schemas.microsoft.com/appx/2010/storeassociation">
   <Publisher>CN=C91088FC-231C-4E13-86D1-5F9658173DA7</Publisher>
   <PublisherDisplayName>pepeizq's apps</PublisherDisplayName>
+  <DeveloperAccountType>MSA</DeveloperAccountType>
   <GeneratePackageHash>http://www.w3.org/2001/04/xmlenc#sha256</GeneratePackageHash>
   <SupportedLocales>
     <Language Code="af" InMinimumRequirementSet="true" />
@@ -370,11 +371,16 @@
     <MainPackageIdentityName>5078pepeizq.OfertasenAmazon</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.RedditGameDeals</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.Battle.netTiles</MainPackageIdentityName>
+    <MainPackageIdentityName>5078pepeizq.DiscordTiles</MainPackageIdentityName>
+    <MainPackageIdentityName>5078pepeizq.EpicGamesTiles</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.GamersGate</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.GOGTiles</MainPackageIdentityName>
+    <MainPackageIdentityName>5078pepeizq.1793360F2073C</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.OfertasdeunPanda-AplicacinOficial</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.OriginTiles</MainPackageIdentityName>
+    <MainPackageIdentityName>5078pepeizq.pepeizqsCities</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.20054F14ADAAA</MainPackageIdentityName>
+    <MainPackageIdentityName>5078pepeizq.pepeizqsWallpapers</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.SteamBridge</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.SteamCategories</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.SteamDeals</MainPackageIdentityName>
@@ -383,5 +389,100 @@
     <MainPackageIdentityName>5078pepeizq.19563A9081E52</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.TwitchTiles</MainPackageIdentityName>
   </AccountPackageIdentityNames>
-  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9P6TTBLTHP0L" />
+  <PackageInfoList LandingUrl="https://developer.microsoft.com/dashboard/Application?appId=9P6TTBLTHP0L">
+    <BundleInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>X86</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.3.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>X64</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.3.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.3.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.3.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.3.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.3.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.3.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.3.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.3.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+    </BundleInfo>
+    <BundleInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>X86</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.4.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>X64</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.4.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.4.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.4.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.4.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.4.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.4.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.4.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+      <PackageInfo>
+        <OsMinVersion>0.0.0.0</OsMinVersion>
+        <PackageArchitecture>Neutral</PackageArchitecture>
+        <PackageMaxArchitectureVersion>1.3.4.0</PackageMaxArchitectureVersion>
+      </PackageInfo>
+    </BundleInfo>
+  </PackageInfoList>
 </StoreAssociation>
