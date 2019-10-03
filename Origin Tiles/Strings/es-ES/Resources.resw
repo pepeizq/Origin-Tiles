@@ -264,4 +264,7 @@
   <data name="TileWide.Text" xml:space="preserve">
     <value>Tile Ancha</value>
   </data>
+  <data name="ConfigCleanCache.Text" xml:space="preserve">
+    <value>Limpiar Cache</value>
+  </data>
 </root>

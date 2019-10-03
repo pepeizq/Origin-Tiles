@@ -1,4 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
+Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Windows.Storage
@@ -18,10 +19,27 @@ Module Origin
 
     Public Async Sub Generar(boolBuscarCarpeta As Boolean)
 
+        Dim helper As New LocalObjectStorageHelper
+
         Dim recursos As New Resources.ResourceLoader()
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
+
+        Dim pr As ProgressRing = pagina.FindName("prTiles")
+        pr.Visibility = Visibility.Visible
+
+        Dim botonCache As Button = pagina.FindName("botonConfigLimpiarCache")
+        botonCache.IsEnabled = False
+
+        Dim gv As GridView = pagina.FindName("gridViewTiles")
+        gv.Items.Clear()
+
+        Dim listaJuegos As New List(Of Tile)
+
+        If Await helper.FileExistsAsync("juegos") = True Then
+            listaJuegos = Await helper.ReadFileAsync(Of List(Of Tile))("juegos")
+        End If
 
         Dim botonAñadirCarpetaTexto As TextBlock = pagina.FindName("botonAñadirCarpetaOriginTexto")
 
@@ -29,9 +47,6 @@ Module Origin
 
         Dim botonAñadir As Button = pagina.FindName("botonAñadirCarpetaOrigin")
         botonAñadir.IsEnabled = False
-
-        Dim pr As ProgressRing = pagina.FindName("prTilesOrigin")
-        pr.Visibility = Visibility.Visible
 
         Dim carpeta As StorageFolder = Nothing
 
@@ -49,8 +64,6 @@ Module Origin
         Catch ex As Exception
 
         End Try
-
-        Dim listaJuegos As New List(Of Tile)
 
         If Not carpeta Is Nothing Then
             If carpeta.Path.Contains("Origin\LocalContent") Then
@@ -125,85 +138,69 @@ Module Origin
                             End If
 
                             If Not id = Nothing Then
-                                Dim html As String = Await Decompiladores.HttpClient(New Uri("https://api2.origin.com/ecommerce2/public/supercat/" + id + "/en_US?country=US"))
+                                Dim añadir As Boolean = True
 
-                                If Not html = Nothing Then
-                                    Dim titulo As String = Nothing
+                                For Each juegoGuardado In listaJuegos
+                                    Dim id2 As String = juegoGuardado.ID
+                                    id2 = id2.Replace(".", Nothing)
+                                    id2 = id2.Replace(":", Nothing)
+                                    id2 = id2.Replace("%", Nothing)
 
-                                    If html.Contains(ChrW(34) + "displayName" + ChrW(34)) Then
-                                        Dim temp, temp2 As String
-                                        Dim int, int2 As Integer
-
-                                        int = html.IndexOf(ChrW(34) + "displayName" + ChrW(34))
-                                        temp = html.Remove(0, int + 1)
-
-                                        int = temp.IndexOf(":")
-                                        temp = temp.Remove(0, int + 2)
-
-                                        int2 = temp.IndexOf(ChrW(34))
-                                        temp2 = temp.Remove(int2, temp.Length - int2)
-
-                                        temp2 = Regex.Replace(temp2, "[^\u0000-\u007F]", String.Empty)
-
-                                        titulo = temp2.Trim
+                                    If id2 = id Then
+                                        añadir = False
                                     End If
+                                Next
 
-                                    Dim imagenAlta As String = Nothing
+                                If añadir = True Then
+                                    Dim id2 As String = id
+                                    id2 = id2.Replace(".", Nothing)
+                                    id2 = id2.Replace(":", Nothing)
+                                    id2 = id2.Replace("%", Nothing)
 
-                                    If html.Contains(ChrW(34) + "imageServer" + ChrW(34)) Then
-                                        Dim temp, temp2 As String
-                                        Dim int, int2 As Integer
+                                    Dim html As String = Await Decompiladores.HttpClient(New Uri("https://api2.origin.com/ecommerce2/public/supercat/" + id + "/en_US?country=US"))
 
-                                        int = html.IndexOf(ChrW(34) + "imageServer" + ChrW(34))
-                                        temp = html.Remove(0, int + 1)
+                                    If Not html = Nothing Then
+                                        Dim titulo As String = Nothing
 
-                                        int = temp.IndexOf(":")
-                                        temp = temp.Remove(0, int + 2)
+                                        If html.Contains(ChrW(34) + "displayName" + ChrW(34)) Then
+                                            Dim temp, temp2 As String
+                                            Dim int, int2 As Integer
 
-                                        int2 = temp.IndexOf(ChrW(34))
-                                        temp2 = temp.Remove(int2, temp.Length - int2)
+                                            int = html.IndexOf(ChrW(34) + "displayName" + ChrW(34))
+                                            temp = html.Remove(0, int + 1)
 
-                                        If html.Contains(ChrW(34) + "packArtLarge" + ChrW(34)) Then
-                                            Dim temp3, temp4 As String
-                                            Dim int3, int4 As Integer
+                                            int = temp.IndexOf(":")
+                                            temp = temp.Remove(0, int + 2)
 
-                                            int3 = html.IndexOf(ChrW(34) + "packArtLarge" + ChrW(34))
-                                            temp3 = html.Remove(0, int3 + 1)
+                                            int2 = temp.IndexOf(ChrW(34))
+                                            temp2 = temp.Remove(int2, temp.Length - int2)
 
-                                            int3 = temp3.IndexOf(":")
-                                            temp3 = temp3.Remove(0, int3 + 2)
+                                            temp2 = Regex.Replace(temp2, "[^\u0000-\u007F]", String.Empty)
 
-                                            int4 = temp3.IndexOf(ChrW(34))
-                                            temp4 = temp3.Remove(int4, temp3.Length - int4)
-
-                                            imagenAlta = temp2.Trim + temp4.Trim
+                                            titulo = temp2.Trim
                                         End If
-                                    End If
 
-                                    Dim imagenAncha As String = Nothing
+                                        Dim imagenAlta As String = Nothing
 
-                                    If html.Contains(ChrW(34) + "path" + ChrW(34)) Then
-                                        Dim temp, temp2 As String
-                                        Dim int, int2 As Integer
+                                        If html.Contains(ChrW(34) + "imageServer" + ChrW(34)) Then
+                                            Dim temp, temp2 As String
+                                            Dim int, int2 As Integer
 
-                                        int = html.IndexOf(ChrW(34) + "path" + ChrW(34))
-                                        temp = html.Remove(0, int + 1)
+                                            int = html.IndexOf(ChrW(34) + "imageServer" + ChrW(34))
+                                            temp = html.Remove(0, int + 1)
 
-                                        int = temp.IndexOf(":")
-                                        temp = temp.Remove(0, int + 2)
+                                            int = temp.IndexOf(":")
+                                            temp = temp.Remove(0, int + 2)
 
-                                        int2 = temp.IndexOf(ChrW(34))
-                                        temp2 = temp.Remove(int2, temp.Length - int2)
+                                            int2 = temp.IndexOf(ChrW(34))
+                                            temp2 = temp.Remove(int2, temp.Length - int2)
 
-                                        Dim html2 As String = Await Decompiladores.HttpClient(New Uri("https://data1.origin.com/ocd/" + temp2.Trim + ".en-us.esp.ocd"))
-
-                                        If Not html2 = Nothing Then
-                                            If html2.Contains(ChrW(34) + "download-background-image" + ChrW(34)) Then
+                                            If html.Contains(ChrW(34) + "packArtLarge" + ChrW(34)) Then
                                                 Dim temp3, temp4 As String
                                                 Dim int3, int4 As Integer
 
-                                                int3 = html2.IndexOf(ChrW(34) + "download-background-image" + ChrW(34))
-                                                temp3 = html2.Remove(0, int3 + 1)
+                                                int3 = html.IndexOf(ChrW(34) + "packArtLarge" + ChrW(34))
+                                                temp3 = html.Remove(0, int3 + 1)
 
                                                 int3 = temp3.IndexOf(":")
                                                 temp3 = temp3.Remove(0, int3 + 2)
@@ -211,36 +208,67 @@ Module Origin
                                                 int4 = temp3.IndexOf(ChrW(34))
                                                 temp4 = temp3.Remove(int4, temp3.Length - int4)
 
-                                                imagenAncha = temp4.Trim
+                                                imagenAlta = Await Cache.DescargarImagen(temp2.Trim + temp4.Trim, id2, "alta")
                                             End If
                                         End If
-                                    End If
 
-                                    If imagenAncha = Nothing Then
-                                        imagenAncha = imagenAlta
-                                    End If
+                                        Dim imagenAncha As String = Nothing
 
-                                    Dim tituloBool As Boolean = False
-                                    Dim i As Integer = 0
-                                    While i < listaJuegos.Count
-                                        If listaJuegos(i).Titulo = titulo Then
-                                            tituloBool = True
+                                        If html.Contains(ChrW(34) + "path" + ChrW(34)) Then
+                                            Dim temp, temp2 As String
+                                            Dim int, int2 As Integer
+
+                                            int = html.IndexOf(ChrW(34) + "path" + ChrW(34))
+                                            temp = html.Remove(0, int + 1)
+
+                                            int = temp.IndexOf(":")
+                                            temp = temp.Remove(0, int + 2)
+
+                                            int2 = temp.IndexOf(ChrW(34))
+                                            temp2 = temp.Remove(int2, temp.Length - int2)
+
+                                            Dim html2 As String = Await Decompiladores.HttpClient(New Uri("https://data1.origin.com/ocd/" + temp2.Trim + ".en-us.esp.ocd"))
+
+                                            If Not html2 = Nothing Then
+                                                If html2.Contains(ChrW(34) + "download-background-image" + ChrW(34)) Then
+                                                    Dim temp3, temp4 As String
+                                                    Dim int3, int4 As Integer
+
+                                                    int3 = html2.IndexOf(ChrW(34) + "download-background-image" + ChrW(34))
+                                                    temp3 = html2.Remove(0, int3 + 1)
+
+                                                    int3 = temp3.IndexOf(":")
+                                                    temp3 = temp3.Remove(0, int3 + 2)
+
+                                                    int4 = temp3.IndexOf(ChrW(34))
+                                                    temp4 = temp3.Remove(int4, temp3.Length - int4)
+
+                                                    imagenAncha = Await Cache.DescargarImagen(temp4.Trim, id2, "ancha")
+                                                End If
+                                            End If
                                         End If
 
-                                        If html.Contains(ChrW(34) + "originDisplayType" + ChrW(34) + ":" + ChrW(34) + "Addon") Then
-                                            tituloBool = True
+                                        If imagenAncha = Nothing Then
+                                            imagenAncha = imagenAlta
                                         End If
-                                        i += 1
-                                    End While
 
-                                    If tituloBool = False Then
-                                        Dim id2 As String = id
-                                        id2 = id2.Replace(".", Nothing)
-                                        id2 = id2.Replace(":", Nothing)
-                                        id2 = id2.Replace("%", Nothing)
+                                        Dim tituloBool As Boolean = False
+                                        Dim i As Integer = 0
+                                        While i < listaJuegos.Count
+                                            If listaJuegos(i).Titulo = titulo Then
+                                                tituloBool = True
+                                            End If
 
-                                        Dim juego As New Tile(titulo, id2, "origin://launchgame/" + id, Nothing, New Uri(imagenAlta), New Uri(imagenAncha), New Uri(imagenAlta))
-                                        listaJuegos.Add(juego)
+                                            If html.Contains(ChrW(34) + "originDisplayType" + ChrW(34) + ":" + ChrW(34) + "Addon") Then
+                                                tituloBool = True
+                                            End If
+                                            i += 1
+                                        End While
+
+                                        If tituloBool = False Then
+                                            Dim juego As New Tile(titulo, id2, "origin://launchgame/" + id, Nothing, New Uri(imagenAlta), New Uri(imagenAncha), New Uri(imagenAlta))
+                                            listaJuegos.Add(juego)
+                                        End If
                                     End If
                                 End If
                             End If
@@ -250,6 +278,10 @@ Module Origin
             End If
         End If
 
+        Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
+
+        pr.Visibility = Visibility.Collapsed
+
         Dim panelAvisoNoJuegos As Grid = pagina.FindName("panelAvisoNoJuegos")
         Dim gridSeleccionar As Grid = pagina.FindName("gridSeleccionarJuego")
 
@@ -257,14 +289,7 @@ Module Origin
             panelAvisoNoJuegos.Visibility = Visibility.Collapsed
             gridSeleccionar.Visibility = Visibility.Visible
 
-            Dim gv As GridView = pagina.FindName("gridViewTilesOrigin")
             gv.IsEnabled = False
-
-            Try
-                gv.Items.Clear()
-            Catch ex As Exception
-
-            End Try
 
             listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
@@ -315,8 +340,8 @@ Module Origin
             gridSeleccionar.Visibility = Visibility.Collapsed
         End If
 
+        botonCache.IsEnabled = True
         botonAñadir.IsEnabled = True
-        pr.Visibility = Visibility.Collapsed
 
     End Sub
 

@@ -264,4 +264,7 @@
   <data name="TileWide.Text" xml:space="preserve">
     <value>Wide Tile</value>
   </data>
+  <data name="ConfigCleanCache.Text" xml:space="preserve">
+    <value>Clear Cache</value>
+  </data>
 </root>
