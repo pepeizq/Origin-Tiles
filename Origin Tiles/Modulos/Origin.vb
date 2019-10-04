@@ -208,7 +208,11 @@ Module Origin
                                                 int4 = temp3.IndexOf(ChrW(34))
                                                 temp4 = temp3.Remove(int4, temp3.Length - int4)
 
-                                                imagenAlta = Await Cache.DescargarImagen(temp2.Trim + temp4.Trim, id2, "alta")
+                                                Try
+                                                    imagenAlta = Await Cache.DescargarImagen(temp2.Trim + temp4.Trim, id2, "alta")
+                                                Catch ex As Exception
+
+                                                End Try
                                             End If
                                         End If
 
@@ -243,7 +247,11 @@ Module Origin
                                                     int4 = temp3.IndexOf(ChrW(34))
                                                     temp4 = temp3.Remove(int4, temp3.Length - int4)
 
-                                                    imagenAncha = Await Cache.DescargarImagen(temp4.Trim, id2, "ancha")
+                                                    Try
+                                                        imagenAncha = Await Cache.DescargarImagen(temp4.Trim, id2, "ancha")
+                                                    Catch ex As Exception
+
+                                                    End Try
                                                 End If
                                             End If
                                         End If
