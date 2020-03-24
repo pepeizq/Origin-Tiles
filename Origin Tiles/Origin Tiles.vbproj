@@ -113,8 +113,12 @@
     <None Include="Origin Tiles_StoreKey.pfx" />
     <PRIResource Include="Strings\pl-PL\Resources.resw" />
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
-    <PRIResource Include="Strings\es-ES\Resources.resw" />
-    <PRIResource Include="Strings\en-US\Resources.resw" />
+    <PRIResource Include="Strings\es-ES\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="Strings\en-US\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.vb">
@@ -131,7 +135,9 @@
     <Compile Include="Modulos\NavigationViewItems.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
     <Compile Include="Modulos\Origin.vb" />
-    <Compile Include="Modulos\Tiles.vb" />
+    <Compile Include="Modulos\Tiles\Añadir.vb" />
+    <Compile Include="Modulos\Tiles\Imagen.vb" />
+    <Compile Include="Modulos\Tiles\Personalizacion.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -141,10 +147,13 @@
     <None Include="Origin Tiles_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Iconos\1.png" />
+    <Content Include="Assets\Iconos\2.png" />
+    <Content Include="Assets\Iconos\3.png" />
+    <Content Include="Assets\Iconos\4.png" />
+    <Content Include="Assets\Iconos\5.png" />
+    <Content Include="Assets\Iconos\6.png" />
     <Content Include="Assets\origin_logo.png" />
-    <Content Include="Assets\origin_logo_mini3.png" />
-    <Content Include="Assets\origin_logo_mini2.png" />
-    <Content Include="Assets\origin_logo_mini1.png" />
     <Content Include="Assets\Logos\AppList.altform-unplated_targetsize-16.png" />
     <Content Include="Assets\Logos\AppList.altform-unplated_targetsize-24.png" />
     <Content Include="Assets\Logos\AppList.altform-unplated_targetsize-256.png" />
@@ -267,9 +276,7 @@
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modulos\Tiles\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

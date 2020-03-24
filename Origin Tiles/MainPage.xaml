@@ -42,8 +42,8 @@
 
                 <Grid.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                        <GradientStop Color="#2b3a44" Offset="0.5" />
-                        <GradientStop Color="#141b20" Offset="1.0" />
+                        <GradientStop Color="#d8dce0" Offset="0.5" />
+                        <GradientStop Color="#b7bfc6" Offset="1.0" />
                     </LinearGradientBrush>
                 </Grid.Background>
 
@@ -72,7 +72,7 @@
                         </Grid.ColumnDefinitions>
 
                         <controls:AdaptiveGridView x:Name="gvTiles" Grid.Column="0" Padding="5,0,5,0"
-                                       IsItemClickEnabled="True" DesiredWidth="231" ItemHeight="326"
+                                       IsItemClickEnabled="True" DesiredWidth="261" ItemHeight="326"
                                        animations:ReorderGridAnimation.Duration="250">
                         </controls:AdaptiveGridView>
 
@@ -94,7 +94,7 @@
                                     <controls:ImageEx x:Name="imagenJuegoSeleccionado" Stretch="UniformToFill" IsCacheEnabled="True"/>
                                 </Border>
 
-                                <TextBlock x:Name="tbJuegoSeleccionado" Grid.Column="1" VerticalAlignment="Center" Margin="20,0" TextWrapping="Wrap" Foreground="White" FontSize="18"/>
+                                <TextBlock x:Name="tbJuegoSeleccionado" Grid.Column="1" VerticalAlignment="Center" Margin="20,0" TextWrapping="Wrap" FontSize="18"/>
                             </Grid>
 
                             <Grid Grid.Row="1" Padding="20" Background="{StaticResource BrushCuarto}">
@@ -201,7 +201,7 @@
                                     <Button.Content>
                                         <controls:DropShadowPanel ShadowOpacity="0.9" BlurRadius="5">
                                             <Grid x:Name="gridTileAncha" Background="{StaticResource BrushTercero}" Width="310" Height="150">
-                                                <controls:ImageEx x:Name="imagenTileAncha" IsCacheEnabled="True" Stretch="UniformToFill"/>
+                                                <controls:ImageEx x:Name="imagenTileAncha" IsCacheEnabled="True" Stretch="Uniform"/>
                                             </Grid>
                                         </controls:DropShadowPanel>
                                     </Button.Content>
@@ -223,7 +223,7 @@
                                     <Button.Content>
                                         <controls:DropShadowPanel ShadowOpacity="0.9" BlurRadius="5">
                                             <Grid x:Name="gridTileGrande" Background="{StaticResource BrushTercero}" Width="310" Height="310">
-                                                <controls:ImageEx x:Name="imagenTileGrande" IsCacheEnabled="True" Stretch="UniformToFill"/>
+                                                <controls:ImageEx x:Name="imagenTileGrande" IsCacheEnabled="True" Stretch="Uniform"/>
                                             </Grid>
                                         </controls:DropShadowPanel>
                                     </Button.Content>
@@ -234,8 +234,8 @@
                 </Grid>
 
                 <StackPanel x:Name="spProgreso" Orientation="Horizontal" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <ProgressBar x:Name="pbProgreso" Width="200" Foreground="White"/>
-                    <TextBlock x:Name="tbProgreso" Margin="25,0,0,0" VerticalAlignment="Center" Foreground="White"/>
+                    <ProgressBar x:Name="pbProgreso" Width="200"/>
+                    <TextBlock x:Name="tbProgreso" Margin="25,0,0,0" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <Grid x:Name="gridAvisoNoJuegos" Padding="10" Background="IndianRed"
