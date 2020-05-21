@@ -309,58 +309,64 @@ Module Origin
         Dim gridTiles As Grid = pagina.FindName("gridTiles")
         Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
 
-        If listaJuegos.Count > 0 Then
-            gridTiles.Visibility = Visibility.Visible
-            gridAvisoNoJuegos.Visibility = Visibility.Collapsed
-            gridSeleccionarJuego.Visibility = Visibility.Visible
+        If Not listaJuegos Is Nothing Then
+            If listaJuegos.Count > 0 Then
+                gridTiles.Visibility = Visibility.Visible
+                gridAvisoNoJuegos.Visibility = Visibility.Collapsed
+                gridSeleccionarJuego.Visibility = Visibility.Visible
 
-            gv.IsEnabled = False
+                gv.IsEnabled = False
 
-            listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
+                listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
-            For Each juego In listaJuegos
-                Dim panel As New DropShadowPanel With {
-                    .Margin = New Thickness(5, 5, 5, 5),
-                    .ShadowOpacity = 0.9,
-                    .BlurRadius = 5
-                }
+                For Each juego In listaJuegos
+                    Dim panel As New DropShadowPanel With {
+                        .Margin = New Thickness(5, 5, 5, 5),
+                        .ShadowOpacity = 0.9,
+                        .BlurRadius = 5
+                    }
 
-                Dim boton As New Button
+                    Dim boton As New Button
 
-                Dim imagen As New ImageEx With {
-                    .Source = juego.ImagenGrande,
-                    .IsCacheEnabled = True,
-                    .Stretch = Stretch.UniformToFill,
-                    .Padding = New Thickness(0, 0, 0, 0)
-                }
+                    Dim imagen As New ImageEx With {
+                        .Source = juego.ImagenGrande,
+                        .IsCacheEnabled = True,
+                        .Stretch = Stretch.UniformToFill,
+                        .Padding = New Thickness(0, 0, 0, 0)
+                    }
 
-                boton.Tag = juego
-                boton.Content = imagen
-                boton.Padding = New Thickness(0, 0, 0, 0)
-                boton.Background = New SolidColorBrush(Colors.Transparent)
+                    boton.Tag = juego
+                    boton.Content = imagen
+                    boton.Padding = New Thickness(0, 0, 0, 0)
+                    boton.Background = New SolidColorBrush(Colors.Transparent)
 
-                panel.Content = boton
+                    panel.Content = boton
 
-                Dim tbToolTip As TextBlock = New TextBlock With {
-                    .Text = juego.Titulo,
-                    .FontSize = 16
-                }
+                    Dim tbToolTip As TextBlock = New TextBlock With {
+                        .Text = juego.Titulo,
+                        .FontSize = 16
+                    }
 
-                ToolTipService.SetToolTip(boton, tbToolTip)
-                ToolTipService.SetPlacement(boton, PlacementMode.Mouse)
+                    ToolTipService.SetToolTip(boton, tbToolTip)
+                    ToolTipService.SetPlacement(boton, PlacementMode.Mouse)
 
-                AddHandler boton.Click, AddressOf BotonTile_Click
-                AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
-                AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
+                    AddHandler boton.Click, AddressOf BotonTile_Click
+                    AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
+                    AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
 
-                gv.Items.Add(panel)
-            Next
+                    gv.Items.Add(panel)
+                Next
 
-            If boolBuscarCarpeta = True Then
-                Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
+                If boolBuscarCarpeta = True Then
+                    Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
+                End If
+
+                gv.IsEnabled = True
+            Else
+                gridTiles.Visibility = Visibility.Collapsed
+                gridAvisoNoJuegos.Visibility = Visibility.Visible
+                gridSeleccionarJuego.Visibility = Visibility.Collapsed
             End If
-
-            gv.IsEnabled = True
         Else
             gridTiles.Visibility = Visibility.Collapsed
             gridAvisoNoJuegos.Visibility = Visibility.Visible
