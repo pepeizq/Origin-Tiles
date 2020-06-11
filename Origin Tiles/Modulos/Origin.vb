@@ -320,41 +320,7 @@ Module Origin
                 listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
                 For Each juego In listaJuegos
-                    Dim panel As New DropShadowPanel With {
-                        .Margin = New Thickness(5, 5, 5, 5),
-                        .ShadowOpacity = 0.9,
-                        .BlurRadius = 5
-                    }
-
-                    Dim boton As New Button
-
-                    Dim imagen As New ImageEx With {
-                        .Source = juego.ImagenGrande,
-                        .IsCacheEnabled = True,
-                        .Stretch = Stretch.UniformToFill,
-                        .Padding = New Thickness(0, 0, 0, 0)
-                    }
-
-                    boton.Tag = juego
-                    boton.Content = imagen
-                    boton.Padding = New Thickness(0, 0, 0, 0)
-                    boton.Background = New SolidColorBrush(Colors.Transparent)
-
-                    panel.Content = boton
-
-                    Dim tbToolTip As TextBlock = New TextBlock With {
-                        .Text = juego.Titulo,
-                        .FontSize = 16
-                    }
-
-                    ToolTipService.SetToolTip(boton, tbToolTip)
-                    ToolTipService.SetPlacement(boton, PlacementMode.Mouse)
-
-                    AddHandler boton.Click, AddressOf BotonTile_Click
-                    AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
-                    AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
-
-                    gv.Items.Add(panel)
+                    BotonEstilo(juego, gv)
                 Next
 
                 If boolBuscarCarpeta = True Then
@@ -375,6 +341,48 @@ Module Origin
 
         botonCache.IsEnabled = True
         botonAñadir.IsEnabled = True
+
+    End Sub
+
+    Public Sub BotonEstilo(juego As Tile, gv As GridView)
+
+        Dim panel As New DropShadowPanel With {
+            .Margin = New Thickness(5, 5, 5, 5),
+            .ShadowOpacity = 0.9,
+            .BlurRadius = 5,
+            .MaxWidth = anchoColumna + 10
+        }
+
+        Dim boton As New Button
+
+        Dim imagen As New ImageEx With {
+            .Source = juego.ImagenGrande,
+            .IsCacheEnabled = True,
+            .Stretch = Stretch.UniformToFill,
+            .Padding = New Thickness(0, 0, 0, 0)
+        }
+
+        boton.Tag = juego
+        boton.Content = imagen
+        boton.Padding = New Thickness(0, 0, 0, 0)
+        boton.Background = New SolidColorBrush(Colors.Transparent)
+
+        panel.Content = boton
+
+        Dim tbToolTip As TextBlock = New TextBlock With {
+            .Text = juego.Titulo,
+            .FontSize = 16,
+            .TextWrapping = TextWrapping.Wrap
+        }
+
+        ToolTipService.SetToolTip(boton, tbToolTip)
+        ToolTipService.SetPlacement(boton, PlacementMode.Mouse)
+
+        AddHandler boton.Click, AddressOf BotonTile_Click
+        AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
+
+        gv.Items.Add(panel)
 
     End Sub
 
