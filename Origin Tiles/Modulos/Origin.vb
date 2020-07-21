@@ -2,6 +2,7 @@
 Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
+Imports Newtonsoft.Json
 Imports Windows.Storage
 Imports Windows.Storage.AccessCache
 Imports Windows.Storage.Pickers
@@ -17,7 +18,7 @@ Imports Windows.UI.Xaml.Media.Animation
 
 Module Origin
 
-    Public anchoColumna As Integer = 260
+    Public anchoColumna As Integer = 231
 
     Public Async Sub Generar(boolBuscarCarpeta As Boolean)
 
@@ -172,61 +173,11 @@ Module Origin
                                     Dim html As String = Await Decompiladores.HttpClient(New Uri("https://api2.origin.com/ecommerce2/public/supercat/" + id + "/en_US?country=US"))
 
                                     If Not html = Nothing Then
-                                        Dim titulo As String = Nothing
+                                        Dim juegoOrigin As OriginBBDDJuego = JsonConvert.DeserializeObject(Of OriginBBDDJuego)(html)
 
-                                        If html.Contains(ChrW(34) + "displayName" + ChrW(34)) Then
-                                            Dim temp, temp2 As String
-                                            Dim int, int2 As Integer
+                                        Dim titulo As String = juegoOrigin.i18n.Titulo
 
-                                            int = html.IndexOf(ChrW(34) + "displayName" + ChrW(34))
-                                            temp = html.Remove(0, int + 1)
-
-                                            int = temp.IndexOf(":")
-                                            temp = temp.Remove(0, int + 2)
-
-                                            int2 = temp.IndexOf(ChrW(34))
-                                            temp2 = temp.Remove(int2, temp.Length - int2)
-
-                                            temp2 = Regex.Replace(temp2, "[^\u0000-\u007F]", String.Empty)
-
-                                            titulo = temp2.Trim
-                                        End If
-
-                                        Dim imagenAlta As String = Nothing
-
-                                        If html.Contains(ChrW(34) + "imageServer" + ChrW(34)) Then
-                                            Dim temp, temp2 As String
-                                            Dim int, int2 As Integer
-
-                                            int = html.IndexOf(ChrW(34) + "imageServer" + ChrW(34))
-                                            temp = html.Remove(0, int + 1)
-
-                                            int = temp.IndexOf(":")
-                                            temp = temp.Remove(0, int + 2)
-
-                                            int2 = temp.IndexOf(ChrW(34))
-                                            temp2 = temp.Remove(int2, temp.Length - int2)
-
-                                            If html.Contains(ChrW(34) + "packArtLarge" + ChrW(34)) Then
-                                                Dim temp3, temp4 As String
-                                                Dim int3, int4 As Integer
-
-                                                int3 = html.IndexOf(ChrW(34) + "packArtLarge" + ChrW(34))
-                                                temp3 = html.Remove(0, int3 + 1)
-
-                                                int3 = temp3.IndexOf(":")
-                                                temp3 = temp3.Remove(0, int3 + 2)
-
-                                                int4 = temp3.IndexOf(ChrW(34))
-                                                temp4 = temp3.Remove(int4, temp3.Length - int4)
-
-                                                Try
-                                                    imagenAlta = Await Cache.DescargarImagen(temp2.Trim + temp4.Trim, id2, "alta")
-                                                Catch ex As Exception
-
-                                                End Try
-                                            End If
-                                        End If
+                                        Dim imagenAlta As String = juegoOrigin.ImagenRaiz + juegoOrigin.i18n.ImagenGrande
 
                                         Dim imagenAncha As String = Nothing
 
@@ -272,22 +223,27 @@ Module Origin
                                             imagenAncha = imagenAlta
                                         End If
 
-                                        Dim tituloBool As Boolean = False
+                                        Dim añadir2 As Boolean = True
                                         Dim i As Integer = 0
                                         While i < listaJuegos.Count
                                             If listaJuegos(i).Titulo = titulo Then
-                                                tituloBool = True
+                                                añadir2 = False
                                             End If
 
-                                            If html.Contains(ChrW(34) + "originDisplayType" + ChrW(34) + ":" + ChrW(34) + "Addon") Then
-                                                tituloBool = True
+                                            If juegoOrigin.Distribucion = "Addon" Then
+                                                añadir2 = False
+                                            End If
+
+                                            If juegoOrigin.Distribucion2 = "TRIAL" Then
+                                                añadir2 = False
                                             End If
                                             i += 1
                                         End While
 
-                                        If tituloBool = False Then
+                                        If añadir2 = True Then
                                             Dim juego As New Tile(titulo, id2, "origin://launchgame/" + id, Nothing, imagenAlta, imagenAncha, imagenAlta)
                                             listaJuegos.Add(juego)
+                                            Exit For
                                         End If
                                     End If
                                 End If
@@ -308,12 +264,14 @@ Module Origin
 
         Dim gridTiles As Grid = pagina.FindName("gridTiles")
         Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
+        Dim spBuscador As StackPanel = pagina.FindName("spBuscador")
 
         If Not listaJuegos Is Nothing Then
             If listaJuegos.Count > 0 Then
                 gridTiles.Visibility = Visibility.Visible
                 gridAvisoNoJuegos.Visibility = Visibility.Collapsed
                 gridSeleccionarJuego.Visibility = Visibility.Visible
+                spBuscador.Visibility = Visibility.Visible
 
                 gv.IsEnabled = False
 
@@ -323,20 +281,22 @@ Module Origin
                     BotonEstilo(juego, gv)
                 Next
 
-                If boolBuscarCarpeta = True Then
-                    Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
-                End If
+                'If boolBuscarCarpeta = True Then
+                '    Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
+                'End If
 
                 gv.IsEnabled = True
             Else
                 gridTiles.Visibility = Visibility.Collapsed
                 gridAvisoNoJuegos.Visibility = Visibility.Visible
                 gridSeleccionarJuego.Visibility = Visibility.Collapsed
+                spBuscador.Visibility = Visibility.Collapsed
             End If
         Else
             gridTiles.Visibility = Visibility.Collapsed
             gridAvisoNoJuegos.Visibility = Visibility.Visible
             gridSeleccionarJuego.Visibility = Visibility.Collapsed
+            spBuscador.Visibility = Visibility.Collapsed
         End If
 
         botonCache.IsEnabled = True
@@ -347,10 +307,12 @@ Module Origin
     Public Sub BotonEstilo(juego As Tile, gv As GridView)
 
         Dim panel As New DropShadowPanel With {
-            .Margin = New Thickness(5, 5, 5, 5),
+            .Margin = New Thickness(10, 10, 10, 10),
             .ShadowOpacity = 0.9,
-            .BlurRadius = 5,
-            .MaxWidth = anchoColumna + 10
+            .BlurRadius = 10,
+            .MaxWidth = anchoColumna + 20,
+            .HorizontalAlignment = HorizontalAlignment.Center,
+            .VerticalAlignment = VerticalAlignment.Center
         }
 
         Dim boton As New Button
@@ -358,8 +320,10 @@ Module Origin
         Dim imagen As New ImageEx With {
             .Source = juego.ImagenGrande,
             .IsCacheEnabled = True,
-            .Stretch = Stretch.UniformToFill,
-            .Padding = New Thickness(0, 0, 0, 0)
+            .Stretch = Stretch.Uniform,
+            .Padding = New Thickness(0, 0, 0, 0),
+            .HorizontalAlignment = HorizontalAlignment.Center,
+            .VerticalAlignment = VerticalAlignment.Center
         }
 
         boton.Tag = juego
@@ -390,6 +354,9 @@ Module Origin
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
+
+        Dim spBuscador As StackPanel = pagina.FindName("spBuscador")
+        spBuscador.Visibility = Visibility.Collapsed
 
         Dim botonJuego As Button = e.OriginalSource
         Dim juego As Tile = botonJuego.Tag
@@ -431,31 +398,34 @@ Module Origin
 
         '---------------------------------------------
 
+        Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
+        imagenPequeña.Source = Nothing
+
+        Dim imagenMediana As ImageEx = pagina.FindName("imagenTileMediana")
+        imagenMediana.Source = Nothing
+
+        Dim imagenAncha As ImageEx = pagina.FindName("imagenTileAncha")
+        imagenAncha.Source = Nothing
+
+        Dim imagenGrande As ImageEx = pagina.FindName("imagenTileGrande")
+        imagenGrande.Source = Nothing
+
         If juego.ImagenPequeña = Nothing Then
             juego.ImagenPequeña = "ms-appx:///Assets/Logos/AppList.scale-100.png"
         End If
 
-        Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
         imagenPequeña.Source = juego.ImagenPequeña
         imagenPequeña.Tag = juego.ImagenPequeña
-
-        Dim imagenMediana As ImageEx = pagina.FindName("imagenTileMediana")
-        imagenMediana.Source = Nothing
 
         If Not juego.ImagenMediana = Nothing Then
             imagenMediana.Source = juego.ImagenMediana
             imagenMediana.Tag = juego.ImagenMediana
         End If
 
-        Dim imagenAncha As ImageEx = pagina.FindName("imagenTileAncha")
-        imagenAncha.Source = Nothing
-
         If Not juego.ImagenAncha = Nothing Then
             imagenAncha.Source = juego.ImagenAncha
             imagenAncha.Tag = juego.ImagenAncha
         End If
-
-        Dim imagenGrande As ImageEx = pagina.FindName("imagenTileGrande")
 
         If Not juego.ImagenGrande = Nothing Then
             imagenGrande.Source = juego.ImagenGrande
@@ -466,10 +436,14 @@ Module Origin
 
     Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
 
-        Dim boton As Button = sender
-        Dim imagen As ImageEx = boton.Content
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
 
-        imagen.Saturation(0).Start()
+        Dim gvTiles As AdaptiveGridView = pagina.FindName("gvTiles")
+
+        Dim boton As Button = sender
+
+        boton.Saturation(0).Scale(1.05, 1.05, gvTiles.DesiredWidth / 2, gvTiles.ItemHeight / 2).Start()
 
         Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
 
@@ -477,13 +451,52 @@ Module Origin
 
     Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
 
-        Dim boton As Button = sender
-        Dim imagen As ImageEx = boton.Content
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
 
-        imagen.Saturation(1).Start()
+        Dim gvTiles As AdaptiveGridView = pagina.FindName("gvTiles")
+
+        Dim boton As Button = sender
+
+        boton.Saturation(1).Scale(1, 1, gvTiles.DesiredWidth / 2, gvTiles.ItemHeight / 2).Start()
 
         Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
     End Sub
+
+    Public Class OriginBBDDJuego
+
+        <JsonProperty("offerId")>
+        Public ID As String
+
+        <JsonProperty("offerPath")>
+        Public Enlace As String
+
+        <JsonProperty("i18n")>
+        Public i18n As OriginBBDDJuegoi18n
+
+        <JsonProperty("imageServer")>
+        Public ImagenRaiz As String
+
+        <JsonProperty("originDisplayType")>
+        Public Distribucion As String
+
+        <JsonProperty("gameTypeFacetKey")>
+        Public Distribucion2 As String
+
+    End Class
+
+    Public Class OriginBBDDJuegoi18n
+
+        <JsonProperty("displayName")>
+        Public Titulo As String
+
+        <JsonProperty("packArtMedium")>
+        Public ImagenPequeña As String
+
+        <JsonProperty("packArtLarge")>
+        Public ImagenGrande As String
+
+    End Class
 
 End Module
