@@ -44,7 +44,7 @@ Module Origin
         Dim gridSeleccionarJuego As Grid = pagina.FindName("gridSeleccionarJuego")
         gridSeleccionarJuego.Visibility = Visibility.Collapsed
 
-        Dim gv As GridView = pagina.FindName("gvTiles")
+        Dim gv As AdaptiveGridView = pagina.FindName("gvTiles")
         gv.Items.Clear()
 
         Dim listaJuegos As New List(Of Tile)

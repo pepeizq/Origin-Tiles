@@ -120,9 +120,6 @@ Module Cache
         Dim pr As ProgressRing = pagina.FindName("prConfigLimpiarCache")
         pr.Visibility = Visibility.Visible
 
-        Dim cbTiles As ComboBox = pagina.FindName("cbConfigModosTiles")
-        cbTiles.IsEnabled = False
-
         Dim gridSeleccionarJuego As Grid = pagina.FindName("gridSeleccionarJuego")
         gridSeleccionarJuego.Visibility = Visibility.Collapsed
 
@@ -142,7 +139,6 @@ Module Cache
 
         boton.IsEnabled = True
         pr.Visibility = Visibility.Collapsed
-        cbTiles.IsEnabled = True
 
     End Sub
 
