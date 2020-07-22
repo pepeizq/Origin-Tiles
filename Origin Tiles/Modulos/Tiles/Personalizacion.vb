@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.Toolkit.Uwp.UI.Controls
-Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Windows.Storage
 Imports Windows.Storage.Pickers
 Imports Windows.Storage.Streams
@@ -10,7 +9,7 @@ Namespace Tiles
     Module Personalizacion
 
         ReadOnly listaIconos As New List(Of String) From {
-            "1", "2", "3", "4", "5", "6", "7"
+            "1", "2", "3", "4", "5", "6"
         }
 
         Public Async Sub Cargar(grid As Grid, tipo As Integer, fuente As String)
