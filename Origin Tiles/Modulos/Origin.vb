@@ -1,5 +1,4 @@
-﻿Imports System.Text.RegularExpressions
-Imports Microsoft.Toolkit.Uwp.Helpers
+﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Newtonsoft.Json
@@ -38,8 +37,7 @@ Module Origin
         Dim tbProgreso As TextBlock = pagina.FindName("tbProgreso")
         tbProgreso.Text = String.Empty
 
-        Dim botonCache As Button = pagina.FindName("botonConfigLimpiarCache")
-        botonCache.IsEnabled = False
+        Cache.Estado(False)
 
         Dim gridSeleccionarJuego As Grid = pagina.FindName("gridSeleccionarJuego")
         gridSeleccionarJuego.Visibility = Visibility.Collapsed
@@ -299,8 +297,8 @@ Module Origin
             spBuscador.Visibility = Visibility.Collapsed
         End If
 
-        botonCache.IsEnabled = True
         botonAñadir.IsEnabled = True
+        Cache.Estado(True)
 
     End Sub
 
