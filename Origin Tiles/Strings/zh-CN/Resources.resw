@@ -177,7 +177,7 @@
   <data name="ConfigAddFolder.Text" xml:space="preserve">
     <value>添加文件夹</value>
   </data>
-  <data name="ConfigFolderHowAdd.Content" xml:space="preserve">
+  <data name="ConfigFolderHowAdd.Text" xml:space="preserve">
     <value />
   </data>
   <data name="ConfigFolderWarning.Text" xml:space="preserve">

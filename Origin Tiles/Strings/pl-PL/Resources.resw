@@ -177,7 +177,7 @@
   <data name="ConfigAddFolder.Text" xml:space="preserve">
     <value>Dodaj folder</value>
   </data>
-  <data name="ConfigFolderHowAdd.Content" xml:space="preserve">
+  <data name="ConfigFolderHowAdd.Text" xml:space="preserve">
     <value>Jak odblokować</value>
   </data>
   <data name="ConfigFolderWarning.Text" xml:space="preserve">

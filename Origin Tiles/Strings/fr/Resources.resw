@@ -133,7 +133,7 @@
     <value>Aider à traduire</value>
   </data>
   <data name="MoreThings_MoreApps" xml:space="preserve">
-    <value>Plus d&apos;apps</value>
+    <value>Plus d'apps</value>
   </data>
   <data name="NoFoldersDetected" xml:space="preserve">
     <value>Aucun</value>
@@ -154,7 +154,7 @@
     <value>Vignettes</value>
   </data>
   <data name="MoreThings_VoteApp" xml:space="preserve">
-    <value>Noter l&apos;app</value>
+    <value>Noter l'app</value>
   </data>
   <data name="Change" xml:space="preserve">
     <value>Modifier le dossier</value>
@@ -177,7 +177,7 @@
   <data name="ConfigAddFolder.Text" xml:space="preserve">
     <value>Dossier Ajouter</value>
   </data>
-  <data name="ConfigFolderHowAdd.Content" xml:space="preserve">
+  <data name="ConfigFolderHowAdd.Text" xml:space="preserve">
     <value>Comment débloquer</value>
   </data>
   <data name="ConfigFolderWarning.Text" xml:space="preserve">
@@ -205,31 +205,31 @@
     <value>Rechercher sur votre ordinateur</value>
   </data>
   <data name="OptionsSourceInfo.Text" xml:space="preserve">
-    <value>Changer l&apos;image avec une de votre ordinateur ou d&apos;internet</value>
+    <value>Changer l'image avec une de votre ordinateur ou d'internet</value>
   </data>
   <data name="OptionsSourceUbication.Text" xml:space="preserve">
-    <value>Emplacement de l&apos;image</value>
+    <value>Emplacement de l'image</value>
   </data>
   <data name="OptionsSourceUbication1.Content" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="OptionsSourceUbication2.Content" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="OptionsSourceInternet.Text" xml:space="preserve">
-    <value>Ajouter le lien URL de l&apos;image</value>
+    <value>Ajouter le lien URL de l'image</value>
   </data>
   <data name="OptionsBackground.Text" xml:space="preserve">
     <value>Fond</value>
   </data>
   <data name="OptionsSourceStretch.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="OptionsSourceStretch1.Content" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="OptionsSourceStretch2.Content" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="OptionsSourceStretch3.Content" xml:space="preserve">
     <value>Remplir</value>
@@ -250,13 +250,13 @@
     <value>Le titre sera affiché en bas à gauche de la Vignette</value>
   </data>
   <data name="OptionsMove.Text" xml:space="preserve">
-    <value>Déplacer l&apos;image</value>
+    <value>Déplacer l'image</value>
   </data>
   <data name="OptionsPlatform.Text" xml:space="preserve">
     <value>Plateforme</value>
   </data>
   <data name="OptionsPlatformIcon.Content" xml:space="preserve">
-    <value>Afficher l&apos;icon de plateforme</value>
+    <value>Afficher l'icon de plateforme</value>
   </data>
   <data name="OptionsPlatformPosition.Text" xml:space="preserve">
     <value>Position</value>
@@ -274,6 +274,6 @@
     <value>En bas à droite</value>
   </data>
   <data name="GamePersonalizationInfo.Text" xml:space="preserve">
-    <value>Cliquez sur l&apos;image pour la customiser avant de l&apos;ajouter à la Vignette</value>
+    <value>Cliquez sur l'image pour la customiser avant de l'ajouter à la Vignette</value>
   </data>
 </root>
