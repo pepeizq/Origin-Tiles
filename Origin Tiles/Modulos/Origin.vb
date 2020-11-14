@@ -228,6 +228,10 @@ Module Origin
                                                 añadir2 = False
                                             End If
 
+                                            If titulo.Contains("Soundtrack") = True Then
+                                                añadir2 = False
+                                            End If
+
                                             If juegoOrigin.Distribucion = "Addon" Then
                                                 añadir2 = False
                                             End If
