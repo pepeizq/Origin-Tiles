@@ -23,7 +23,7 @@
             <uap:ShowOn Tile="square310x310Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
-        <uap:SplashScreen Image="assets\Logos\SplashScreen.png" BackgroundColor="#c7410e" />
+        <uap:SplashScreen Image="assets\Logos\SplashScreen.png" a:Optional="true" xmlns:a="http://schemas.microsoft.com/appx/manifest/uap/windows10/5" BackgroundColor="#c7410e" />
         <uap:LockScreen BadgeLogo="assets\Logos\Badge.png" Notification="badge" />
       </uap:VisualElements>
     </Application>
