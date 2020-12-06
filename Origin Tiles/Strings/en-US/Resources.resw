@@ -381,6 +381,9 @@
   <data name="MoreTilesError" xml:space="preserve">
     <value>The list of applications could not be loaded, but you can visit my website to see them.</value>
   </data>
+  <data name="MoreTilesOpen" xml:space="preserve">
+    <value>Open App in Store</value>
+  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
@@ -389,6 +392,12 @@
   </data>
   <data name="Origin_ConfigMessage.Text" xml:space="preserve">
     <value>Select the folder: C:\ProgramData\Origin\LocalContent</value>
+  </data>
+  <data name="Origin_StoreDescription" xml:space="preserve">
+    <value>Pin Tiles of your games from Origin to the Windows 10 Start Menu.</value>
+  </data>
+  <data name="Origin_StoreTags" xml:space="preserve">
+    <value>Origin,EA Play,Apex,Mass Effect,Battlefield,Star Wars,FIFA</value>
   </data>
   <data name="Origin_Title" xml:space="preserve">
     <value>Tiles for Origin Games</value>

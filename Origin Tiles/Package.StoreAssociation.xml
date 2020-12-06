@@ -364,6 +364,8 @@
     <MainPackageIdentityName>5078pepeizq.HoriginTiles</MainPackageIdentityName>
     <ReservedNames>
       <ReservedName>Origin PinTiles</ReservedName>
+      <ReservedName>Tiles for Origin Games</ReservedName>
+      <ReservedName>Tiles para los juegos de Origin</ReservedName>
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
@@ -371,6 +373,7 @@
     <MainPackageIdentityName>5078pepeizq.SteamTilesinWindows10</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.SteamTilesforWindows10</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.OfertasenAmazon</MainPackageIdentityName>
+    <MainPackageIdentityName>5078pepeizq.AmazonGamesTiles</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.RedditGameDeals</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.BethesdaTiles</MainPackageIdentityName>
     <MainPackageIdentityName>5078pepeizq.Battle.netTiles</MainPackageIdentityName>
