@@ -6,9 +6,9 @@
 
     <Application.Resources>
         <Color x:Key="ColorPrimario">#c7410e</Color>
-        <Color x:Key="ColorSecundario">#7e2909</Color>
+        <Color x:Key="ColorSecundario">#a2350b</Color>
         <Color x:Key="ColorTerciario">#fce2d8</Color>
-        <Color x:Key="ColorCuarto">#a2350b</Color>
+        <Color x:Key="ColorCuarto">#7e2909</Color>
 
         <SolidColorBrush x:Key="BrushPrimario" Color="{StaticResource ColorPrimario}"/>
         <SolidColorBrush x:Key="BrushSecundario" Color="{StaticResource ColorSecundario}"/>

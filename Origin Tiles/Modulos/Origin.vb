@@ -1,13 +1,10 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
-Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Newtonsoft.Json
 Imports Windows.Storage
 Imports Windows.Storage.AccessCache
 Imports Windows.Storage.Pickers
 Imports Windows.UI
-Imports Windows.UI.Core
-Imports Windows.UI.Xaml.Media.Animation
 
 'https://api1.origin.com/supercarp/rating/offers/anonymous?country=ES&locale=es_ES&pid=&currency=EUR&offerIds=Origin.OFR.50.0002325
 'https://data1.origin.com/ocd/battlefield/battlefield-1/standard-edition.es-es.esp.ocd
@@ -17,9 +14,11 @@ Imports Windows.UI.Xaml.Media.Animation
 
 Module Origin
 
-    Public anchoColumna As Integer = 231
+    Public anchoColumna As Integer = 180
+    Dim clave As String = "OriginCarpeta"
+    Dim dominioImagenesSteam As String = "https://cdn.cloudflare.steamstatic.com"
 
-    Public Async Sub Generar(boolBuscarCarpeta As Boolean)
+    Public Async Sub Generar(buscarCarpeta As Boolean)
 
         Dim helper As New LocalObjectStorageHelper
 
@@ -28,21 +27,17 @@ Module Origin
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim spProgreso As StackPanel = pagina.FindName("spProgreso")
-        spProgreso.Visibility = Visibility.Visible
-
         Dim pbProgreso As ProgressBar = pagina.FindName("pbProgreso")
         pbProgreso.Value = 0
 
         Dim tbProgreso As TextBlock = pagina.FindName("tbProgreso")
         tbProgreso.Text = String.Empty
 
+        Configuracion.Estado(False)
         Cache.Estado(False)
 
-        Dim gridSeleccionarJuego As Grid = pagina.FindName("gridSeleccionarJuego")
-        gridSeleccionarJuego.Visibility = Visibility.Collapsed
-
         Dim gv As AdaptiveGridView = pagina.FindName("gvTiles")
+        gv.DesiredWidth = anchoColumna
         gv.Items.Clear()
 
         Dim listaJuegos As New List(Of Tile)
@@ -51,36 +46,34 @@ Module Origin
             listaJuegos = Await helper.ReadFileAsync(Of List(Of Tile))("juegos")
         End If
 
-        Dim botonAñadirCarpetaTexto As TextBlock = pagina.FindName("botonAñadirCarpetaOriginTexto")
-
-        Dim botonCarpetaTexto As TextBlock = pagina.FindName("tbOriginConfigCarpeta")
-
-        Dim botonAñadir As Button = pagina.FindName("botonAñadirCarpetaOrigin")
-        botonAñadir.IsEnabled = False
-
         Dim carpeta As StorageFolder = Nothing
 
         Try
-            If boolBuscarCarpeta = True Then
+            If buscarCarpeta = True Then
                 Dim carpetapicker As New FolderPicker()
 
                 carpetapicker.FileTypeFilter.Add("*")
                 carpetapicker.ViewMode = PickerViewMode.List
 
                 carpeta = Await carpetapicker.PickSingleFolderAsync()
+
+                If Not carpeta Is Nothing Then
+                    If carpeta.Path.Contains("Origin\LocalContent") Then
+                        StorageApplicationPermissions.FutureAccessList.AddOrReplace(clave, carpeta)
+                    End If
+                End If
             Else
-                carpeta = Await StorageApplicationPermissions.FutureAccessList.GetFolderAsync("OriginCarpeta")
+                carpeta = Await StorageApplicationPermissions.FutureAccessList.GetFolderAsync(clave)
             End If
         Catch ex As Exception
 
         End Try
 
         If Not carpeta Is Nothing Then
-            If carpeta.Path.Contains("Origin\LocalContent") Then
-                StorageApplicationPermissions.FutureAccessList.AddOrReplace("OriginCarpeta", carpeta)
-                botonCarpetaTexto.Text = carpeta.Path
-                botonAñadirCarpetaTexto.Text = recursos.GetString("Change")
+            Dim gridProgreso As Grid = pagina.FindName("gridProgreso")
+            Interfaz.Pestañas.Visibilidad_Pestañas(gridProgreso, Nothing)
 
+            If carpeta.Path.Contains("Origin\LocalContent") Then
                 Dim carpetasJuegos As IReadOnlyList(Of StorageFolder) = Await carpeta.GetFoldersAsync()
 
                 Dim k As Integer = 0
@@ -141,10 +134,12 @@ Module Origin
 
                                 If id.Contains("OFB-EAST") Then
                                     id = id.Replace("OFB-EAST", "OFB-EAST:")
+                                    id = id.Replace("OFB-EAST%3a", "OFB-EAST:")
                                 End If
 
                                 If id.Contains("DR") Then
                                     id = id.Replace("DR", "DR:")
+                                    id = id.Replace("DR%3a", "DR:")
                                 End If
                             End If
 
@@ -153,9 +148,8 @@ Module Origin
 
                                 For Each juegoGuardado In listaJuegos
                                     Dim id2 As String = juegoGuardado.ID
-                                    id2 = id2.Replace(".", Nothing)
                                     id2 = id2.Replace(":", Nothing)
-                                    id2 = id2.Replace("%", Nothing)
+                                    id2 = id2.Replace("%3a", Nothing)
 
                                     If id2 = id Then
                                         añadir = False
@@ -163,10 +157,10 @@ Module Origin
                                 Next
 
                                 If añadir = True Then
+                                    id = id.Replace("%3a", ":")
+
                                     Dim id2 As String = id
-                                    id2 = id2.Replace(".", Nothing)
                                     id2 = id2.Replace(":", Nothing)
-                                    id2 = id2.Replace("%", Nothing)
 
                                     Dim html As String = Await Decompiladores.HttpClient(New Uri("https://api2.origin.com/ecommerce2/public/supercat/" + id + "/en_US?country=US"))
 
@@ -175,50 +169,139 @@ Module Origin
 
                                         Dim titulo As String = juegoOrigin.i18n.Titulo
 
-                                        Dim imagenAlta As String = juegoOrigin.ImagenRaiz + juegoOrigin.i18n.ImagenGrande
+                                        Dim imagenPequeña As String = Await Cache.DescargarImagen(Nothing, id2, "pequeña")
+                                        Dim imagenMediana As String = Await Cache.DescargarImagen(Nothing, id2, "mediana")
+                                        Dim imagenAncha As String = Await Cache.DescargarImagen(Nothing, id2, "ancha")
+                                        Dim imagenGrande As String = Await Cache.DescargarImagen(Nothing, id2, "grande")
 
-                                        Dim imagenAncha As String = Nothing
+                                        Dim buscar As Integer = 0
 
-                                        If html.Contains(ChrW(34) + "path" + ChrW(34)) Then
-                                            Dim temp, temp2 As String
-                                            Dim int, int2 As Integer
+                                        If imagenMediana = Nothing Then
+                                            buscar += 1
+                                        End If
 
-                                            int = html.IndexOf(ChrW(34) + "path" + ChrW(34))
-                                            temp = html.Remove(0, int + 1)
+                                        If imagenAncha = Nothing Then
+                                            buscar += 1
+                                        End If
 
-                                            int = temp.IndexOf(":")
-                                            temp = temp.Remove(0, int + 2)
+                                        If imagenGrande = Nothing Then
+                                            buscar += 1
+                                        End If
 
-                                            int2 = temp.IndexOf(ChrW(34))
-                                            temp2 = temp.Remove(int2, temp.Length - int2)
+                                        If buscar = 3 Then
+                                            If Not OriginBBDD.BuscarenListado(id) = String.Empty Then
+                                                Dim idSteam As String = OriginBBDD.BuscarenListado(id)
 
-                                            Dim html2 As String = Await Decompiladores.HttpClient(New Uri("https://data1.origin.com/ocd/" + temp2.Trim + ".en-us.esp.ocd"))
-
-                                            If Not html2 = Nothing Then
-                                                If html2.Contains(ChrW(34) + "download-background-image" + ChrW(34)) Then
-                                                    Dim temp3, temp4 As String
-                                                    Dim int3, int4 As Integer
-
-                                                    int3 = html2.IndexOf(ChrW(34) + "download-background-image" + ChrW(34))
-                                                    temp3 = html2.Remove(0, int3 + 1)
-
-                                                    int3 = temp3.IndexOf(":")
-                                                    temp3 = temp3.Remove(0, int3 + 2)
-
-                                                    int4 = temp3.IndexOf(ChrW(34))
-                                                    temp4 = temp3.Remove(int4, temp3.Length - int4)
-
+                                                If imagenMediana = Nothing Then
                                                     Try
-                                                        imagenAncha = Await Cache.DescargarImagen(temp4.Trim, id2, "ancha")
+                                                        imagenMediana = Await Cache.DescargarImagen(dominioImagenesSteam + "/steam/apps/" + idSteam + "/logo.png", id2, "mediana")
                                                     Catch ex As Exception
 
                                                     End Try
                                                 End If
-                                            End If
-                                        End If
 
-                                        If imagenAncha = Nothing Then
-                                            imagenAncha = imagenAlta
+                                                If imagenAncha = Nothing Then
+                                                    Try
+                                                        imagenAncha = Await Cache.DescargarImagen(dominioImagenesSteam + "/steam/apps/" + idSteam + "/header.jpg", id2, "ancha")
+                                                    Catch ex As Exception
+
+                                                    End Try
+                                                End If
+
+                                                If imagenGrande = Nothing Then
+                                                    Try
+                                                        imagenGrande = Await Cache.DescargarImagen(dominioImagenesSteam + "/steam/apps/" + idSteam + "/library_600x900.jpg", id2, "grande")
+                                                    Catch ex As Exception
+
+                                                    End Try
+                                                End If
+                                            Else
+                                                Dim encontradoSteam As Boolean = False
+
+                                                If Not juegoOrigin.Plataformas Is Nothing Then
+                                                    If juegoOrigin.Plataformas.Count > 0 Then
+                                                        For Each plataforma In juegoOrigin.Plataformas
+                                                            If plataforma.Plataforma.ToLower = "steam" Then
+                                                                encontradoSteam = True
+
+                                                                If imagenMediana = Nothing Then
+                                                                    Try
+                                                                        imagenMediana = Await Cache.DescargarImagen(dominioImagenesSteam + "/steam/apps/" + plataforma.PlataformaID + "/logo.png", id2, "logo")
+                                                                    Catch ex As Exception
+
+                                                                    End Try
+                                                                End If
+
+                                                                If imagenAncha = Nothing Then
+                                                                    Try
+                                                                        imagenAncha = Await Cache.DescargarImagen(dominioImagenesSteam + "/steam/apps/" + plataforma.PlataformaID + "/header.jpg", id2, "ancha")
+                                                                    Catch ex As Exception
+
+                                                                    End Try
+                                                                End If
+
+                                                                If imagenGrande = Nothing Then
+                                                                    Try
+                                                                        imagenGrande = Await Cache.DescargarImagen(dominioImagenesSteam + "/steam/apps/" + plataforma.PlataformaID + "/library_600x900.jpg", id2, "grande")
+                                                                    Catch ex As Exception
+
+                                                                    End Try
+                                                                End If
+                                                            End If
+                                                        Next
+                                                    End If
+                                                End If
+
+                                                If encontradoSteam = False Then
+                                                    If imagenGrande = Nothing Then
+                                                        imagenGrande = juegoOrigin.ImagenRaiz + juegoOrigin.i18n.ImagenGrande
+                                                    End If
+
+                                                    If html.Contains(ChrW(34) + "path" + ChrW(34)) Then
+                                                        Dim temp, temp2 As String
+                                                        Dim int, int2 As Integer
+
+                                                        int = html.IndexOf(ChrW(34) + "path" + ChrW(34))
+                                                        temp = html.Remove(0, int + 1)
+
+                                                        int = temp.IndexOf(":")
+                                                        temp = temp.Remove(0, int + 2)
+
+                                                        int2 = temp.IndexOf(ChrW(34))
+                                                        temp2 = temp.Remove(int2, temp.Length - int2)
+
+                                                        Dim html2 As String = Await Decompiladores.HttpClient(New Uri("https://data1.origin.com/ocd/" + temp2.Trim + ".en-us.esp.ocd"))
+
+                                                        If Not html2 = Nothing Then
+                                                            If html2.Contains(ChrW(34) + "download-background-image" + ChrW(34)) Then
+                                                                Dim temp3, temp4 As String
+                                                                Dim int3, int4 As Integer
+
+                                                                int3 = html2.IndexOf(ChrW(34) + "download-background-image" + ChrW(34))
+                                                                temp3 = html2.Remove(0, int3 + 1)
+
+                                                                int3 = temp3.IndexOf(":")
+                                                                temp3 = temp3.Remove(0, int3 + 2)
+
+                                                                int4 = temp3.IndexOf(ChrW(34))
+                                                                temp4 = temp3.Remove(int4, temp3.Length - int4)
+
+                                                                If imagenAncha = Nothing Then
+                                                                    Try
+                                                                        imagenAncha = Await Cache.DescargarImagen(temp4.Trim, id2, "ancha")
+                                                                    Catch ex As Exception
+
+                                                                    End Try
+                                                                End If
+                                                            End If
+                                                        End If
+                                                    End If
+
+                                                    If imagenAncha = Nothing Then
+                                                        imagenAncha = imagenGrande
+                                                    End If
+                                                End If
+                                            End If
                                         End If
 
                                         Dim añadir2 As Boolean = True
@@ -227,23 +310,31 @@ Module Origin
                                             If listaJuegos(i).Titulo = titulo Then
                                                 añadir2 = False
                                             End If
-
-                                            If titulo.Contains("Soundtrack") = True Then
-                                                añadir2 = False
-                                            End If
-
-                                            If juegoOrigin.Distribucion = "Addon" Then
-                                                añadir2 = False
-                                            End If
-
-                                            If juegoOrigin.Distribucion2 = "TRIAL" Then
-                                                añadir2 = False
-                                            End If
                                             i += 1
                                         End While
 
+                                        If titulo.Contains("Soundtrack") = True Then
+                                            añadir2 = False
+                                        End If
+
+                                        If titulo.Contains("Upgrade") = True Then
+                                            añadir2 = False
+                                        End If
+
+                                        If juegoOrigin.Distribucion = "Addon" Then
+                                            añadir2 = False
+                                        End If
+
+                                        If juegoOrigin.Tipo = "Extra Content" Then
+                                            añadir2 = False
+                                        End If
+
+                                        If juegoOrigin.Distribucion2 = "TRIAL" Then
+                                            añadir2 = False
+                                        End If
+
                                         If añadir2 = True Then
-                                            Dim juego As New Tile(titulo, id2, "origin://launchgame/" + id, Nothing, imagenAlta, imagenAncha, imagenAlta)
+                                            Dim juego As New Tile(titulo, id2, "origin://launchgame/" + id, imagenPequeña, imagenMediana, imagenAncha, imagenGrande)
                                             listaJuegos.Add(juego)
                                             Exit For
                                         End If
@@ -262,46 +353,26 @@ Module Origin
 
         Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
 
-        spProgreso.Visibility = Visibility.Collapsed
-
-        Dim gridTiles As Grid = pagina.FindName("gridTiles")
-        Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
-        Dim spBuscador As StackPanel = pagina.FindName("spBuscador")
-
         If Not listaJuegos Is Nothing Then
             If listaJuegos.Count > 0 Then
-                gridTiles.Visibility = Visibility.Visible
-                gridAvisoNoJuegos.Visibility = Visibility.Collapsed
-                gridSeleccionarJuego.Visibility = Visibility.Visible
-                spBuscador.Visibility = Visibility.Visible
-
-                gv.IsEnabled = False
+                Dim gridJuegos As Grid = pagina.FindName("gridJuegos")
+                Interfaz.Pestañas.Visibilidad_Pestañas(gridJuegos, recursos.GetString("Games"))
 
                 listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
                 For Each juego In listaJuegos
                     BotonEstilo(juego, gv)
                 Next
-
-                'If boolBuscarCarpeta = True Then
-                '    Toast(listaJuegos.Count.ToString + " " + recursos.GetString("GamesDetected"), Nothing)
-                'End If
-
-                gv.IsEnabled = True
             Else
-                gridTiles.Visibility = Visibility.Collapsed
-                gridAvisoNoJuegos.Visibility = Visibility.Visible
-                gridSeleccionarJuego.Visibility = Visibility.Collapsed
-                spBuscador.Visibility = Visibility.Collapsed
+                Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
+                Interfaz.Pestañas.Visibilidad_Pestañas(gridAvisoNoJuegos, Nothing)
             End If
         Else
-            gridTiles.Visibility = Visibility.Collapsed
-            gridAvisoNoJuegos.Visibility = Visibility.Visible
-            gridSeleccionarJuego.Visibility = Visibility.Collapsed
-            spBuscador.Visibility = Visibility.Collapsed
+            Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
+            Interfaz.Pestañas.Visibilidad_Pestañas(gridAvisoNoJuegos, Nothing)
         End If
 
-        botonAñadir.IsEnabled = True
+        Configuracion.Estado(True)
         Cache.Estado(True)
 
     End Sub
@@ -322,7 +393,7 @@ Module Origin
         Dim imagen As New ImageEx With {
             .Source = juego.ImagenGrande,
             .IsCacheEnabled = True,
-            .Stretch = Stretch.Uniform,
+            .Stretch = Stretch.UniformToFill,
             .Padding = New Thickness(0, 0, 0, 0),
             .HorizontalAlignment = HorizontalAlignment.Center,
             .VerticalAlignment = VerticalAlignment.Center
@@ -345,8 +416,8 @@ Module Origin
         ToolTipService.SetPlacement(boton, PlacementMode.Mouse)
 
         AddHandler boton.Click, AddressOf BotonTile_Click
-        AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler boton.PointerEntered, AddressOf Interfaz.Entra_Boton_Imagen
+        AddHandler boton.PointerExited, AddressOf Interfaz.Sale_Boton_Imagen
 
         gv.Items.Add(panel)
 
@@ -355,12 +426,10 @@ Module Origin
     Private Sub BotonTile_Click(sender As Object, e As RoutedEventArgs)
 
         Trial.Detectar()
+        Interfaz.AñadirTile.ResetearValores()
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
-
-        Dim spBuscador As StackPanel = pagina.FindName("spBuscador")
-        spBuscador.Visibility = Visibility.Collapsed
 
         Dim botonJuego As Button = e.OriginalSource
         Dim juego As Tile = botonJuego.Tag
@@ -369,36 +438,13 @@ Module Origin
         botonAñadirTile.Tag = juego
 
         Dim imagenJuegoSeleccionado As ImageEx = pagina.FindName("imagenJuegoSeleccionado")
-        imagenJuegoSeleccionado.Source = juego.ImagenGrande
+        imagenJuegoSeleccionado.Source = juego.ImagenAncha
 
         Dim tbJuegoSeleccionado As TextBlock = pagina.FindName("tbJuegoSeleccionado")
         tbJuegoSeleccionado.Text = juego.Titulo
 
-        Dim gridSeleccionarJuego As Grid = pagina.FindName("gridSeleccionarJuego")
-        gridSeleccionarJuego.Visibility = Visibility.Collapsed
-
-        Dim gvTiles As GridView = pagina.FindName("gvTiles")
-
-        If gvTiles.ActualWidth > anchoColumna Then
-            ApplicationData.Current.LocalSettings.Values("ancho_grid_tiles") = gvTiles.ActualWidth
-        End If
-
-        gvTiles.Width = anchoColumna
-        gvTiles.Padding = New Thickness(0, 0, 15, 0)
-
-        Dim gridAñadir As Grid = pagina.FindName("gridAñadirTile")
-        gridAñadir.Visibility = Visibility.Visible
-
-        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("tile", botonJuego)
-
-        Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("tile")
-
-        If Not animacion Is Nothing Then
-            animacion.TryStart(gridAñadir)
-        End If
-
-        Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
-        tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + juego.Titulo
+        Dim gridAñadirTile As Grid = pagina.FindName("gridAñadirTile")
+        Interfaz.Pestañas.Visibilidad_Pestañas(gridAñadirTile, juego.Titulo)
 
         '---------------------------------------------
 
@@ -414,12 +460,10 @@ Module Origin
         Dim imagenGrande As ImageEx = pagina.FindName("imagenTileGrande")
         imagenGrande.Source = Nothing
 
-        If juego.ImagenPequeña = Nothing Then
-            juego.ImagenPequeña = "ms-appx:///Assets/Logos/AppList.scale-100.png"
+        If Not juego.ImagenPequeña = Nothing Then
+            imagenPequeña.Source = juego.ImagenPequeña
+            imagenPequeña.Tag = juego.ImagenPequeña
         End If
-
-        imagenPequeña.Source = juego.ImagenPequeña
-        imagenPequeña.Tag = juego.ImagenPequeña
 
         If Not juego.ImagenMediana = Nothing Then
             imagenMediana.Source = juego.ImagenMediana
@@ -435,24 +479,6 @@ Module Origin
             imagenGrande.Source = juego.ImagenGrande
             imagenGrande.Tag = juego.ImagenGrande
         End If
-
-    End Sub
-
-    Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
-
-        Dim boton As Button = sender
-        boton.Saturation(0).Scale(1.05, 1.05, boton.ActualWidth / 2, boton.ActualHeight / 2).Start()
-
-        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
-
-    End Sub
-
-    Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
-
-        Dim boton As Button = sender
-        boton.Saturation(1).Scale(1, 1, boton.ActualWidth / 2, boton.ActualHeight / 2).Start()
-
-        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
     End Sub
 
@@ -476,6 +502,12 @@ Module Origin
         <JsonProperty("gameTypeFacetKey")>
         Public Distribucion2 As String
 
+        <JsonProperty("offerType")>
+        Public Tipo As String
+
+        <JsonProperty("firstParties")>
+        Public Plataformas As List(Of OriginPlataformas)
+
     End Class
 
     Public Class OriginBBDDJuegoi18n
@@ -488,6 +520,16 @@ Module Origin
 
         <JsonProperty("packArtLarge")>
         Public ImagenGrande As String
+
+    End Class
+
+    Public Class OriginPlataformas
+
+        <JsonProperty("partner")>
+        Public Plataforma As String
+
+        <JsonProperty("partnerId")>
+        Public PlataformaID As String
 
     End Class
 

@@ -387,6 +387,12 @@
   <data name="OpenWeb" xml:space="preserve">
     <value>Abrir Web</value>
   </data>
+  <data name="Origin_ConfigMessage.Text" xml:space="preserve">
+    <value>Selecciona la carpeta: C:\ProgramData\Origin\LocalContent</value>
+  </data>
+  <data name="Origin_Title" xml:space="preserve">
+    <value>Tiles para los juegos de Origin</value>
+  </data>
   <data name="Personalization.Text" xml:space="preserve">
     <value>Personalización</value>
   </data>

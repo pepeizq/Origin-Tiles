@@ -9,7 +9,7 @@
             Dim pagina As Page = frame.Content
 
             Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
-            tbTitulo.Text = recursos.GetString("Gog_Title") + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ")"
+            tbTitulo.Text = recursos.GetString("Origin_Title") + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ")"
 
             If Not tag = Nothing Then
                 tbTitulo.Text = tbTitulo.Text + " • " + tag
