@@ -268,7 +268,7 @@
     <value>Select the folder: C:\ProgramData\GOG.com\Galaxy\webcache\[Your ID User]\gog</value>
   </data>
   <data name="Gog_StoreDescription" xml:space="preserve">
-    <value>Pin Tiles of your games from the GOG Galaxy to the Windows 10 Start Menu.</value>
+    <value>Pin Tiles of your games from GOG Galaxy to the Windows 10 Start Menu.</value>
   </data>
   <data name="Gog_StoreTags" xml:space="preserve">
     <value>Gog,Galaxy,Witcher,Gwent,Cyberpunk</value>
