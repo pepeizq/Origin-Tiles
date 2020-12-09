@@ -46,6 +46,10 @@ Module Origin
             listaJuegos = Await helper.ReadFileAsync(Of List(Of Tile))("juegos")
         End If
 
+        If listaJuegos Is Nothing Then
+            listaJuegos = New List(Of Tile)
+        End If
+
         Dim carpeta As StorageFolder = Nothing
 
         Try
@@ -351,7 +355,11 @@ Module Origin
             End If
         End If
 
-        Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
+        Try
+            Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
+        Catch ex As Exception
+
+        End Try
 
         If Not listaJuegos Is Nothing Then
             If listaJuegos.Count > 0 Then
