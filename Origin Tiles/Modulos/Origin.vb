@@ -173,10 +173,10 @@ Module Origin
 
                                         Dim titulo As String = juegoOrigin.i18n.Titulo
 
-                                        Dim imagenPequeña As String = Await Cache.DescargarImagen(Nothing, id2, "pequeña")
-                                        Dim imagenMediana As String = Await Cache.DescargarImagen(Nothing, id2, "mediana")
-                                        Dim imagenAncha As String = Await Cache.DescargarImagen(Nothing, id2, "ancha")
-                                        Dim imagenGrande As String = Await Cache.DescargarImagen(Nothing, id2, "grande")
+                                        Dim imagenPequeña As String = Await Cache.DescargarImagen(Nothing, OriginBBDD.BuscarenListado(id, 1), "pequeña")
+                                        Dim imagenMediana As String = Await Cache.DescargarImagen(Nothing, OriginBBDD.BuscarenListado(id, 1), "mediana")
+                                        Dim imagenAncha As String = Await Cache.DescargarImagen(Nothing, OriginBBDD.BuscarenListado(id, 1), "ancha")
+                                        Dim imagenGrande As String = Await Cache.DescargarImagen(Nothing, OriginBBDD.BuscarenListado(id, 1), "grande")
 
                                         Dim buscar As Integer = 0
 
@@ -193,8 +193,8 @@ Module Origin
                                         End If
 
                                         If buscar = 3 Then
-                                            If Not OriginBBDD.BuscarenListado(id) = String.Empty Then
-                                                Dim idSteam As String = OriginBBDD.BuscarenListado(id)
+                                            If Not OriginBBDD.BuscarenListado(id, 0) = String.Empty Then
+                                                Dim idSteam As String = OriginBBDD.BuscarenListado(id, 0)
 
                                                 If imagenMediana = Nothing Then
                                                     Try

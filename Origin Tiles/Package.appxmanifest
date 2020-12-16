@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="5078pepeizq.HoriginTiles" Publisher="CN=C91088FC-231C-4E13-86D1-5F9658173DA7" Version="2.2.1.0" />
+  <Identity Name="5078pepeizq.HoriginTiles" Publisher="CN=C91088FC-231C-4E13-86D1-5F9658173DA7" Version="2.2.2.0" />
   <mp:PhoneIdentity PhoneProductId="e1806247-b898-4be7-b7a0-7299cb281f8c" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Tiles for Origin Games</DisplayName>
