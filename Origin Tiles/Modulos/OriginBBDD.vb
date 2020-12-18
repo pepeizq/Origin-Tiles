@@ -5,14 +5,13 @@
     Public Function BuscarenListado(idOrigin As String, devolver As Integer)
 
         Dim lista As New List(Of OriginBBDDEntrada) From {
-            New OriginBBDDEntrada("A Way Out", New List(Of String) From {"Origin.OFR.50.0001900"}, "1222700"),
+            New OriginBBDDEntrada("A Way Out", New List(Of String) From {"Origin.OFR.50.0001900", "Origin.OFR.50.0002487"}, "1222700"),
             New OriginBBDDEntrada("Apex Legends", New List(Of String) From {"Origin.OFR.50.0002694"}, "1172470"),
-            New OriginBBDDEntrada("Anthem Deluxe Edition", New List(Of String) From {"Origin.OFR.50.0002980"}, Nothing),
-            New OriginBBDDEntrada("Battlefield 1", New List(Of String) From {"Origin.OFR.50.0000557"}, "1238840"),
+            New OriginBBDDEntrada("Anthem", New List(Of String) From {"Origin.OFR.50.0001521", "Origin.OFR.50.0002755", "Origin.OFR.50.0002760", "Origin.OFR.50.0002980"}, Nothing),
+            New OriginBBDDEntrada("Battlefield 1", New List(Of String) From {"Origin.OFR.50.0000557", "Origin.OFR.50.0001380", "Origin.OFR.50.0001381", "Origin.OFR.50.0002321", "Origin.OFR.50.0002323", "Origin.OFR.50.0002324"}, "1238840"),
             New OriginBBDDEntrada("Battlefield 1942", New List(Of String) From {"OFB-EAST:56186"}, Nothing),
             New OriginBBDDEntrada("Battlefield 2 Complete Collection", New List(Of String) From {"DR:78869400"}, Nothing),
-            New OriginBBDDEntrada("Battlefield 3", New List(Of String) From {"DR:225064100"}, "1238820"),
-            New OriginBBDDEntrada("Battlefield 3 Limited Edition", New List(Of String) From {"DR:224766400"}, "1238820"),
+            New OriginBBDDEntrada("Battlefield 3", New List(Of String) From {"DR:225064100", "DR:224766400"}, "1238820"),
             New OriginBBDDEntrada("Battlefield 4 Premium Edition", New List(Of String) From {"OFB-EAST:109552316"}, "1238860"),
             New OriginBBDDEntrada("Battlefield Bad Company 2", New List(Of String) From {"DR:156691300"}, "24960"),
             New OriginBBDDEntrada("Battlefield Hardline Ultimate Edition", New List(Of String) From {"Origin.OFR.50.0000846"}, "1238880"),
@@ -83,10 +82,10 @@
             New OriginBBDDEntrada("Star Wars The Old Republic", New List(Of String) From {"DR:231255400"}, "1286830"),
             New OriginBBDDEntrada("The Saboteur", New List(Of String) From {"DR:106999600"}, Nothing),
             New OriginBBDDEntrada("The Sims 3", New List(Of String) From {"OFB-EAST:55107"}, "47890"),
-            New OriginBBDDEntrada("The Sims 4", New List(Of String) From {"OFB-EAST:109552299"}, "1222670"),
+            New OriginBBDDEntrada("The Sims 4", New List(Of String) From {"OFB-EAST:109552299", "OFB-EAST:109552408", "OFB-EAST:109552410", "OFB-EAST:109552414"}, "1222670"),
             New OriginBBDDEntrada("Theme Hospital", New List(Of String) From {"Origin.OFR.50.0000500"}, Nothing),
             New OriginBBDDEntrada("Titanfall Deluxe Edition", New List(Of String) From {"Origin.OFR.50.0000739"}, "1454890"),
-            New OriginBBDDEntrada("Titanfall 2 Deluxe Edition", New List(Of String) From {"Origin.OFR.50.0001456"}, "1237970"),
+            New OriginBBDDEntrada("Titanfall 2", New List(Of String) From {"Origin.OFR.50.0001451", "Origin.OFR.50.0001452", "Origin.OFR.50.0001455", "Origin.OFR.50.0001456"}, "1237970"),
             New OriginBBDDEntrada("Unravel", New List(Of String) From {"Origin.OFR.50.0000823"}, "1225560"),
             New OriginBBDDEntrada("Unravel Two", New List(Of String) From {"Origin.OFR.50.0002403", "Origin.OFR.50.0002522"}, "1225570")
         }
