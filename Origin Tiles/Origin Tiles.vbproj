@@ -207,6 +207,9 @@
     <Content Include="Assets\Juegos\OFB-EAST39131_ancha.png" />
     <Content Include="Assets\Juegos\OFB-EAST39131_grande.jpg" />
     <Content Include="Assets\Juegos\OFB-EAST39131_mediana.png" />
+    <Content Include="Assets\Juegos\OFB-EAST46113_ancha.jpg" />
+    <Content Include="Assets\Juegos\OFB-EAST46113_grande.jpg" />
+    <Content Include="Assets\Juegos\OFB-EAST46113_mediana.png" />
     <Content Include="Assets\Juegos\OFB-EAST46851_pequeña.jpg" />
     <Content Include="Assets\Juegos\OFB-EAST48205_ancha.png" />
     <Content Include="Assets\Juegos\OFB-EAST48205_grande.png" />
