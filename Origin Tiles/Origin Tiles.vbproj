@@ -130,13 +130,13 @@
     <Compile Include="Modulos\Interfaz\Busqueda.vb" />
     <Compile Include="Modulos\Interfaz\EfectosHover.vb" />
     <Compile Include="Modulos\Interfaz\Juegos.vb" />
-    <Compile Include="Modulos\Interfaz\MasTiles.vb" />
     <Compile Include="Modulos\Interfaz\NavigationViewItems.vb" />
     <Compile Include="Modulos\Interfaz\Pestañas.vb" />
     <Compile Include="Modulos\MasCosas.vb" />
     <Compile Include="Modulos\Cache.vb" />
     <Compile Include="Modulos\Configuracion.vb" />
     <Compile Include="Modulos\Decompiladores.vb" />
+    <Compile Include="Modulos\MasTiles.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
     <Compile Include="Modulos\Origin.vb" />
     <Compile Include="Modulos\OriginBBDD.vb" />
@@ -299,12 +299,6 @@
     <Content Include="Assets\Logos\AppList.altform-lightunplated_targetsize-256.png" />
     <Content Include="Assets\Logos\AppList.altform-lightunplated_targetsize-32.png" />
     <Content Include="Assets\Logos\AppList.altform-lightunplated_targetsize-48.png" />
-    <Content Include="Assets\MasCosas\github.png" />
-    <Content Include="Assets\MasCosas\pepeizqapps.png" />
-    <Content Include="Assets\MasCosas\pepeizqdeals.png" />
-    <Content Include="Assets\MasCosas\traducir.png" />
-    <Content Include="Assets\MasCosas\twitter.png" />
-    <Content Include="Assets\MasCosas\youtube.png" />
     <Content Include="Assets\origin_logo.png" />
     <Content Include="Assets\Logos\AppList.altform-unplated_targetsize-16.png" />
     <Content Include="Assets\Logos\AppList.altform-unplated_targetsize-24.png" />

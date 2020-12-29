@@ -5,6 +5,7 @@ Imports Windows.Storage
 Imports Windows.Storage.AccessCache
 Imports Windows.Storage.Pickers
 Imports Windows.UI
+Imports Windows.UI.Xaml.Media.Animation
 
 'https://api1.origin.com/supercarp/rating/offers/anonymous?country=ES&locale=es_ES&pid=&currency=EUR&offerIds=Origin.OFR.50.0002325
 'https://data1.origin.com/ocd/battlefield/battlefield-1/standard-edition.es-es.esp.ocd
@@ -75,7 +76,7 @@ Module Origin
 
         If Not carpeta Is Nothing Then
             Dim gridProgreso As Grid = pagina.FindName("gridProgreso")
-            Interfaz.Pestañas.Visibilidad_Pestañas(gridProgreso, Nothing)
+            Interfaz.Pestañas.Visibilidad(gridProgreso, Nothing, Nothing)
 
             If carpeta.Path.Contains("Origin\LocalContent") Then
                 Dim carpetasJuegos As IReadOnlyList(Of StorageFolder) = Await carpeta.GetFoldersAsync()
@@ -364,7 +365,7 @@ Module Origin
         If Not listaJuegos Is Nothing Then
             If listaJuegos.Count > 0 Then
                 Dim gridJuegos As Grid = pagina.FindName("gridJuegos")
-                Interfaz.Pestañas.Visibilidad_Pestañas(gridJuegos, recursos.GetString("Games"))
+                Interfaz.Pestañas.Visibilidad(gridJuegos, recursos.GetString("Games"), Nothing)
 
                 listaJuegos.Sort(Function(x, y) x.Titulo.CompareTo(y.Titulo))
 
@@ -373,11 +374,11 @@ Module Origin
                 Next
             Else
                 Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
-                Interfaz.Pestañas.Visibilidad_Pestañas(gridAvisoNoJuegos, Nothing)
+                Interfaz.Pestañas.Visibilidad(gridAvisoNoJuegos, Nothing, Nothing)
             End If
         Else
             Dim gridAvisoNoJuegos As Grid = pagina.FindName("gridAvisoNoJuegos")
-            Interfaz.Pestañas.Visibilidad_Pestañas(gridAvisoNoJuegos, Nothing)
+            Interfaz.Pestañas.Visibilidad(gridAvisoNoJuegos, Nothing, Nothing)
         End If
 
         Configuracion.Estado(True)
@@ -453,7 +454,17 @@ Module Origin
         tbJuegoSeleccionado.Text = juego.Titulo
 
         Dim gridAñadirTile As Grid = pagina.FindName("gridAñadirTile")
-        Interfaz.Pestañas.Visibilidad_Pestañas(gridAñadirTile, juego.Titulo)
+        Interfaz.Pestañas.Visibilidad(gridAñadirTile, juego.Titulo, Nothing)
+
+        '---------------------------------------------
+
+        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("animacionJuego", botonJuego)
+        Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animacionJuego")
+
+        If Not animacion Is Nothing Then
+            animacion.Configuration = New BasicConnectedAnimationConfiguration
+            animacion.TryStart(gridAñadirTile)
+        End If
 
         '---------------------------------------------
 
