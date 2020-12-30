@@ -468,6 +468,16 @@ Module Origin
 
         '---------------------------------------------
 
+        Dim tbImagenTituloTextoTileAncha As TextBox = pagina.FindName("tbImagenTituloTextoTileAncha")
+        tbImagenTituloTextoTileAncha.Text = juego.Titulo
+        tbImagenTituloTextoTileAncha.Tag = juego.Titulo
+
+        Dim tbImagenTituloTextoTileGrande As TextBox = pagina.FindName("tbImagenTituloTextoTileGrande")
+        tbImagenTituloTextoTileGrande.Text = juego.Titulo
+        tbImagenTituloTextoTileGrande.Tag = juego.Titulo
+
+        '---------------------------------------------
+
         Dim imagenPequeña As ImageEx = pagina.FindName("imagenTilePequeña")
         imagenPequeña.Source = Nothing
 
