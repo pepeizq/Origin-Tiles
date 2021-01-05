@@ -191,6 +191,9 @@
     <Content Include="Assets\Juegos\DR235664600_ancha.png" />
     <Content Include="Assets\Juegos\DR235664600_grande.png" />
     <Content Include="Assets\Juegos\DR235664600_mediana.png" />
+    <Content Include="Assets\Juegos\DR235934200_ancha.jpg" />
+    <Content Include="Assets\Juegos\DR235934200_grande.jpg" />
+    <Content Include="Assets\Juegos\DR235934200_mediana.png" />
     <Content Include="Assets\Juegos\DR77033800_pequeña.jpg" />
     <Content Include="Assets\Juegos\DR78869400_ancha.png" />
     <Content Include="Assets\Juegos\DR78869400_grande.png" />
@@ -246,6 +249,9 @@
     <Content Include="Assets\Juegos\OFB-EAST56186_grande.png" />
     <Content Include="Assets\Juegos\OFB-EAST56186_mediana.png" />
     <Content Include="Assets\Juegos\OFB-EAST56694_pequeña.jpg" />
+    <Content Include="Assets\Juegos\OFB-EAST60531_ancha.jpg" />
+    <Content Include="Assets\Juegos\OFB-EAST60531_grande.jpg" />
+    <Content Include="Assets\Juegos\OFB-EAST60531_mediana.png" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0000357_ancha.png" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0000357_grande.png" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0000357_mediana.png" />

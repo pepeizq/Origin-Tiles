@@ -83,6 +83,8 @@
             New OriginBBDDEntrada("Star Wars Jedi: Fallen Order", New List(Of String) From {"Origin.OFR.50.0003794", "Origin.OFR.50.0003797", "Origin.OFR.50.0003815"}, "1172380"),
             New OriginBBDDEntrada("Star Wars Squadrons", New List(Of String) From {"Origin.OFR.50.0003112", "Origin.OFR.50.0003896", "Origin.OFR.50.0004099"}, "1222730"),
             New OriginBBDDEntrada("Star Wars The Old Republic", New List(Of String) From {"DR:231255400", "DR:231240400", "Origin.OFR.50.0000006"}, "1286830"),
+            New OriginBBDDEntrada("Syndicate (1993)", New List(Of String) From {"OFB-EAST:60531"}, Nothing),
+            New OriginBBDDEntrada("Syndicate (2012)", New List(Of String) From {"DR:235934200"}, Nothing),
             New OriginBBDDEntrada("The Saboteur", New List(Of String) From {"DR:106999600"}, Nothing),
             New OriginBBDDEntrada("The Sims 3", New List(Of String) From {"OFB-EAST:55107"}, "47890"),
             New OriginBBDDEntrada("The Sims 4", New List(Of String) From {"OFB-EAST:109552299", "OFB-EAST:109552408", "OFB-EAST:109552410", "OFB-EAST:109552414"}, "1222670"),
