@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Newtonsoft.Json
+Imports Origin_Tiles.Configuracion
 Imports Windows.Storage
 Imports Windows.Storage.AccessCache
 Imports Windows.Storage.Pickers
@@ -34,8 +35,9 @@ Module Origin
         Dim tbProgreso As TextBlock = pagina.FindName("tbProgreso")
         tbProgreso.Text = String.Empty
 
-        Configuracion.Estado(False)
+        General.Estado(False)
         Cache.Estado(False)
+        LimpiezaArchivos.Estado(False)
 
         Dim gv As AdaptiveGridView = pagina.FindName("gvTiles")
         gv.DesiredWidth = anchoColumna
@@ -381,8 +383,9 @@ Module Origin
             Interfaz.Pestañas.Visibilidad(gridAvisoNoJuegos, Nothing, Nothing)
         End If
 
-        Configuracion.Estado(True)
+        General.Estado(True)
         Cache.Estado(True)
+        LimpiezaArchivos.Estado(True)
 
     End Sub
 
