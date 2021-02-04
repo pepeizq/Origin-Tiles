@@ -165,6 +165,7 @@ Module Origin
 
                                 If añadir = True Then
                                     id = id.Replace("%3a", ":")
+                                    Dim idEjecutable As String = id
 
                                     Dim id2 As String = id
                                     id2 = id2.Replace(":", Nothing)
@@ -341,7 +342,7 @@ Module Origin
                                         End If
 
                                         If añadir2 = True Then
-                                            Dim juego As New Tile(titulo, id2, "origin://launchgame/" + id, imagenPequeña, imagenMediana, imagenAncha, imagenGrande)
+                                            Dim juego As New Tile(titulo, id2, "origin://launchgame/" + idEjecutable, imagenPequeña, imagenMediana, imagenAncha, imagenGrande)
                                             listaJuegos.Add(juego)
                                             Exit For
                                         End If
