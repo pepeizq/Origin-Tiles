@@ -45,14 +45,6 @@ Module Origin
 
         Dim listaJuegos As New List(Of Tile)
 
-        If Await helper.FileExistsAsync("juegos") = True Then
-            listaJuegos = Await helper.ReadFileAsync(Of List(Of Tile))("juegos")
-        End If
-
-        If listaJuegos Is Nothing Then
-            listaJuegos = New List(Of Tile)
-        End If
-
         Dim carpeta As StorageFolder = Nothing
 
         Try
