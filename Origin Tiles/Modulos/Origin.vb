@@ -2,10 +2,12 @@
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Newtonsoft.Json
 Imports Origin_Tiles.Configuracion
+Imports Windows.ApplicationModel.Core
 Imports Windows.Storage
 Imports Windows.Storage.AccessCache
 Imports Windows.Storage.Pickers
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
 
 'https://api1.origin.com/supercarp/rating/offers/anonymous?country=ES&locale=es_ES&pid=&currency=EUR&offerIds=Origin.OFR.50.0002325
@@ -351,11 +353,14 @@ Module Origin
             End If
         End If
 
-        Try
-            Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
-        Catch ex As Exception
+        Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.High,
+                                                                      Async Sub()
+                                                                          Try
+                                                                              Await helper.SaveFileAsync(Of List(Of Tile))("juegos", listaJuegos)
+                                                                          Catch ex As Exception
 
-        End Try
+                                                                          End Try
+                                                                      End Sub)
 
         If Not listaJuegos Is Nothing Then
             If listaJuegos.Count > 0 Then
