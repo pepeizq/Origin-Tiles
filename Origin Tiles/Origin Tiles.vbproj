@@ -364,6 +364,7 @@
     <Content Include="Assets\Juegos\Origin.OFR.50.0003156_mediana.png" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0003424_pequeña.jpg" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0002623_pequeña.jpg" />
+    <Content Include="Assets\Juegos\Origin.OFR.50.0003487_pequeña.jpg" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0003794_pequeña.jpg" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0003997_pequeña.jpg" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0003515_pequeña.jpg" />
@@ -373,6 +374,10 @@
     <Content Include="Assets\Juegos\Origin.OFR.50.0003744_pequeña.jpg" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0003912_pequeña.jpg" />
     <Content Include="Assets\Juegos\Origin.OFR.50.0004049_pequeña.jpg" />
+    <Content Include="Assets\Juegos\Origin.OFR.50.0004152_pequeña.jpg" />
+    <Content Include="Assets\Juegos\Origin.OFR.50.0004316_pequeña.jpg" />
+    <Content Include="Assets\Juegos\Origin.OFR.50.0004429_pequeña.jpg" />
+    <Content Include="Assets\Juegos\Origin.OFR.50.0004526_pequeña.jpg" />
     <Content Include="Assets\Logos\AppList.altform-lightunplated_targetsize-16.png" />
     <Content Include="Assets\Logos\AppList.altform-lightunplated_targetsize-24.png" />
     <Content Include="Assets\Logos\AppList.altform-lightunplated_targetsize-256.png" />
