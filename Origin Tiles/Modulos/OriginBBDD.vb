@@ -79,6 +79,8 @@
             New OriginBBDDEntrada("FIFA 22", New List(Of String) From {
                 "Origin.OFR.50.0004526", "Origin.OFR.50.0004566", "Origin.OFR.50.0004567", "Origin.OFR.50.0004569",
                 "Origin.OFR.50.0004613", "Origin.OFR.50.0004615", "Origin.OFR.50.0004669", "Origin.OFR.50.0004682"}, "1506830"),
+            New OriginBBDDEntrada("GRID Legends", New List(Of String) From {
+                "Origin.OFR.50.0004713", "Origin.OFR.50.0004714", "Origin.OFR.50.0004716", "Origin.OFR.50.0004717"}, "1307710"),
             New OriginBBDDEntrada("Jade Empire: Special Edition", New List(Of String) From {"OFB-EAST:1000017"}, "7110"),
             New OriginBBDDEntrada("Knockout City", New List(Of String) From {
                 "Origin.OFR.50.0003487", "Origin.OFR.50.0003985", "Origin.OFR.50.0004179", "Origin.OFR.50.0004455",
